@@ -1005,7 +1005,7 @@ YY_RULE_SETUP
 case 40:
 YY_RULE_SETUP
 #line 60 "./source/cafezinho.l"
-{ return (CADEIADECARACTERES); }
+{ return (CARCONST); }
 	YY_BREAK
 case 41:
 /* rule 41 can match eol */

@@ -88,7 +88,7 @@ extern int yydebug;
     ID = 294,
     NOVALINHA = 295,
     PROGRAMA = 296,
-    CADEIADECARACTERES = 297
+    CARCONST = 297
   };
 #endif
 

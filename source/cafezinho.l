@@ -57,7 +57,7 @@ IDENT ({NUMBER}|({CHAR}{CHAR2}*))
 {NUMBER}        { return (INTCONST); }
 {IDENT}         { return (ID); }
 
-["\""]({IDENT}|[" "]|[":"])*["\""]    { return (CADEIADECARACTERES); }
+["\""]({IDENT}|[" "]|[":"])*["\""]    { return (CARCONST); }
 ["\""]{IDENT}["\n"]     { multiLineString(); }
 "/*"                    { comment(); }
 
