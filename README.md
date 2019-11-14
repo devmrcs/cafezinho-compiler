@@ -9,3 +9,6 @@ Como executar
 - Abra o terminal no diretório ~/cafezinho-compiler e execute os seguintes comandos
   - `$make`
   - `$./cafezinho < entrada`
+
+Autor: Marcos Souza
+

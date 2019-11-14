@@ -1,4 +1,7 @@
 %{
+//Autor: Marcos Antônio de Souza
+//Matricula: 201514357
+
 #include <stdio.h>	
 %}
 

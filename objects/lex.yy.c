@@ -524,14 +524,17 @@ int yy_flex_debug = 0;
 char *yytext;
 #line 1 "./source/cafezinho.l"
 #line 2 "./source/cafezinho.l"
+//Autor: Marcos Antônio de Souza
+//Matricula: 201514357
+
 #include <stdio.h>
 #include "cafezinho.tab.h"
 
 static void comment(void);
 static void multiLineString(void);
 
-#line 534 "lex.yy.c"
-#line 535 "lex.yy.c"
+#line 537 "lex.yy.c"
+#line 538 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -748,9 +751,9 @@ YY_DECL
 		}
 
 	{
-#line 15 "./source/cafezinho.l"
+#line 18 "./source/cafezinho.l"
 
-#line 754 "lex.yy.c"
+#line 757 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -809,242 +812,242 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 16 "./source/cafezinho.l"
+#line 19 "./source/cafezinho.l"
 { return (VIRGULA); }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 17 "./source/cafezinho.l"
+#line 20 "./source/cafezinho.l"
 { return (PONTOVIRGULA); }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 18 "./source/cafezinho.l"
+#line 21 "./source/cafezinho.l"
 { return (INTERROGACAO); }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 19 "./source/cafezinho.l"
+#line 22 "./source/cafezinho.l"
 { return (DOISPONTOS); }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 20 "./source/cafezinho.l"
+#line 23 "./source/cafezinho.l"
 { return (EXCLAMACAO); }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 22 "./source/cafezinho.l"
+#line 25 "./source/cafezinho.l"
 { return (ABRECHAVES); }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 23 "./source/cafezinho.l"
+#line 26 "./source/cafezinho.l"
 { return (FECHACHAVES); }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 24 "./source/cafezinho.l"
+#line 27 "./source/cafezinho.l"
 { return (ABREPARENTESES); }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 25 "./source/cafezinho.l"
+#line 28 "./source/cafezinho.l"
 { return (FECHAPARENTESES); }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 26 "./source/cafezinho.l"
+#line 29 "./source/cafezinho.l"
 { return (ABRECOLCHETES); }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 27 "./source/cafezinho.l"
+#line 30 "./source/cafezinho.l"
 { return (FECHACOLCHETES); }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 29 "./source/cafezinho.l"
+#line 32 "./source/cafezinho.l"
 { return (MENOR); }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 30 "./source/cafezinho.l"
+#line 33 "./source/cafezinho.l"
 { return (MAIOR); }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 31 "./source/cafezinho.l"
+#line 34 "./source/cafezinho.l"
 { return (MENORIGUAL); }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 32 "./source/cafezinho.l"
+#line 35 "./source/cafezinho.l"
 { return (MAIORIGUAL); }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 33 "./source/cafezinho.l"
+#line 36 "./source/cafezinho.l"
 { return (MENOS); }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 34 "./source/cafezinho.l"
+#line 37 "./source/cafezinho.l"
 { return (MAIS); }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 35 "./source/cafezinho.l"
+#line 38 "./source/cafezinho.l"
 { return (VEZES); }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 36 "./source/cafezinho.l"
+#line 39 "./source/cafezinho.l"
 { return (DIVIDIR); }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 37 "./source/cafezinho.l"
+#line 40 "./source/cafezinho.l"
 { return (RESTO); }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 38 "./source/cafezinho.l"
+#line 41 "./source/cafezinho.l"
 { return (IGUAL); }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 39 "./source/cafezinho.l"
+#line 42 "./source/cafezinho.l"
 { return (IGUALDUPLO); }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 40 "./source/cafezinho.l"
+#line 43 "./source/cafezinho.l"
 { return (DIFERENTE); }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 41 "./source/cafezinho.l"
+#line 44 "./source/cafezinho.l"
 { return (E); }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 42 "./source/cafezinho.l"
+#line 45 "./source/cafezinho.l"
 { return (OU); }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 44 "./source/cafezinho.l"
+#line 47 "./source/cafezinho.l"
 { return (ENQUANTO); }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 45 "./source/cafezinho.l"
+#line 48 "./source/cafezinho.l"
 { return (SE); }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 46 "./source/cafezinho.l"
+#line 49 "./source/cafezinho.l"
 { return (ENTAO); }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 47 "./source/cafezinho.l"
+#line 50 "./source/cafezinho.l"
 { return (SENAO); }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 48 "./source/cafezinho.l"
+#line 51 "./source/cafezinho.l"
 { return (ESCREVA); }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 49 "./source/cafezinho.l"
+#line 52 "./source/cafezinho.l"
 { return (RETORNE); }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 50 "./source/cafezinho.l"
+#line 53 "./source/cafezinho.l"
 { return (LEIA); }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 51 "./source/cafezinho.l"
+#line 54 "./source/cafezinho.l"
 { return (EXECUTE); }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 52 "./source/cafezinho.l"
+#line 55 "./source/cafezinho.l"
 { return (PROGRAMA); }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 53 "./source/cafezinho.l"
+#line 56 "./source/cafezinho.l"
 { return (INT); }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 54 "./source/cafezinho.l"
+#line 57 "./source/cafezinho.l"
 { return (CAR); }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 55 "./source/cafezinho.l"
+#line 58 "./source/cafezinho.l"
 { return (NOVALINHA); }
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 57 "./source/cafezinho.l"
+#line 60 "./source/cafezinho.l"
 { return (INTCONST); }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 58 "./source/cafezinho.l"
+#line 61 "./source/cafezinho.l"
 { return (ID); }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 60 "./source/cafezinho.l"
+#line 63 "./source/cafezinho.l"
 { return (CARCONST); }
 	YY_BREAK
 case 41:
 /* rule 41 can match eol */
 YY_RULE_SETUP
-#line 61 "./source/cafezinho.l"
+#line 64 "./source/cafezinho.l"
 { multiLineString(); }
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 62 "./source/cafezinho.l"
+#line 65 "./source/cafezinho.l"
 { comment(); }
 	YY_BREAK
 case 43:
 /* rule 43 can match eol */
 YY_RULE_SETUP
-#line 64 "./source/cafezinho.l"
+#line 67 "./source/cafezinho.l"
 { yylineno++; }
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 65 "./source/cafezinho.l"
+#line 68 "./source/cafezinho.l"
 { }
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 66 "./source/cafezinho.l"
+#line 69 "./source/cafezinho.l"
 { }
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 68 "./source/cafezinho.l"
+#line 71 "./source/cafezinho.l"
 { yyerror("invalid character"); }
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 70 "./source/cafezinho.l"
+#line 73 "./source/cafezinho.l"
 ECHO;
 	YY_BREAK
-#line 1048 "lex.yy.c"
+#line 1051 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2049,7 +2052,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 70 "./source/cafezinho.l"
+#line 73 "./source/cafezinho.l"
 
 
 static void comment(void) {

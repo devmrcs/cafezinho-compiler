@@ -68,9 +68,12 @@
 /* First part of user prologue.  */
 #line 1 "./source/cafezinho.y" /* yacc.c:337  */
 
+//Autor: Marcos Antônio de Souza
+//Matricula: 201514357
+
 #include <stdio.h>	
 
-#line 74 "cafezinho.tab.c" /* yacc.c:337  */
+#line 77 "cafezinho.tab.c" /* yacc.c:337  */
 # ifndef YY_NULLPTR
 #  if defined __cplusplus
 #   if 201103L <= __cplusplus
@@ -457,14 +460,14 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    17,    17,    21,    22,    23,    24,    28,    32,    33,
-      34,    38,    41,    42,    46,    47,    48,    49,    53,    54,
-      57,    58,    59,    63,    64,    68,    69,    73,    74,    75,
-      76,    77,    78,    79,    80,    81,    82,    83,    87,    91,
-      92,    96,    97,   101,   102,   106,   107,   111,   112,   113,
-     117,   118,   119,   120,   121,   125,   126,   127,   131,   132,
-     133,   134,   138,   139,   140,   144,   145,   149,   150,   151,
-     152,   153,   154,   155,   159,   160
+       0,    20,    20,    24,    25,    26,    27,    31,    35,    36,
+      37,    41,    44,    45,    49,    50,    51,    52,    56,    57,
+      60,    61,    62,    66,    67,    71,    72,    76,    77,    78,
+      79,    80,    81,    82,    83,    84,    85,    86,    90,    94,
+      95,    99,   100,   104,   105,   109,   110,   114,   115,   116,
+     120,   121,   122,   123,   124,   128,   129,   130,   134,   135,
+     136,   137,   141,   142,   143,   147,   148,   152,   153,   154,
+     155,   156,   157,   158,   162,   163
 };
 #endif
 
@@ -1357,7 +1360,7 @@ yyreduce:
   switch (yyn)
     {
       
-#line 1361 "cafezinho.tab.c" /* yacc.c:1652  */
+#line 1364 "cafezinho.tab.c" /* yacc.c:1652  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1588,7 +1591,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 163 "./source/cafezinho.y" /* yacc.c:1918  */
+#line 166 "./source/cafezinho.y" /* yacc.c:1918  */
 
 main(){
 	printf("+-------------------+\n");
