@@ -5,6 +5,18 @@
 #include <stdio.h>	
 %}
 
+extern "C"
+{
+        int yyparse(void);
+        int yylex(void);  
+        int yywrap()
+        {
+                return 1;
+        }
+
+}
+
+%language "c++"
 %start programa
 
 %token VIRGULA PONTOVIRGULA INTERROGACAO DOISPONTOS EXCLAMACAO

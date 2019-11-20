@@ -9,7 +9,7 @@ L_SOURCE= ./source/cafezinho.l
 all: objFolder cafezinho
 
 cafezinho: cafezinho.tab.c lex.yy.c
-	@ gcc -o cafezinho cafezinho.tab.c lex.yy.c -w
+	@ g++ -o cafezinho cafezinho.tab.c lex.yy.c -w
 	@ mv cafezinho.tab.c lex.yy.c cafezinho.tab.h objects
 
 cafezinho.tab.c: $(Y_SOURCE)

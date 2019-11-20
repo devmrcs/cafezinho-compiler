@@ -1,7 +1,7 @@
 %{
 //Autor: Marcos Antônio de Souza
 //Matricula: 201514357
-
+#include <string>
 #include <stdio.h>
 #include "cafezinho.tab.h"
 
@@ -9,6 +9,7 @@ static void comment(void);
 static void multiLineString(void);
 
 %}
+%option c++
 
 NUMBER [0-9]+
 CHAR [a-zA-Z_]
@@ -75,22 +76,22 @@ IDENT ({NUMBER}|({CHAR}{CHAR2}*))
 static void comment(void) {
     int c;
 
-    //printf("/");
-    //printf("*");
+    //cout << "/";
+    //cout << "*";
 
     while ((c = input()) != 0) {
-        //printf("%c", c);
+        //cout << c;
 
         if (c == '*') {
             c = input();
             if (c == '/'){
-                //printf("%c", c);
+                //cout << c;
                 return;
             }
 
             if (c == 0)
                 break;
-            //printf("%c", c);
+            //cout << c;
         }
     }
 
@@ -102,7 +103,7 @@ static void multiLineString(void) {
     yylineno++;
     
     while ((c = input()) != 0) {
-        printf("%c", c);
+        //cout << c;
 
         if (c == '\n')
             yylineno++;

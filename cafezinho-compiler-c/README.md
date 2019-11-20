@@ -3,7 +3,7 @@
 
 ## Compilador para a Linguagem Cafezinho
 
-Para compilação do código, certifique-se que tenha instalado o Flex/Lex, Bison/Yacc e o GCC em sua máquina.
+Para compilação do código, certifique-se que tenha instalado o Flex/Lex, Bison/Yacc e o G++ em sua máquina.
 
 Como executar
 - Abra o terminal no diretório ~/cafezinho-compiler e execute os seguintes comandos
