@@ -9,7 +9,7 @@
 
 	using namespace std;
 
-	#include "parser.h"
+	#include "cafezinho_parser.h"
 
     static void comment(void);
     static void multiLineString(void);

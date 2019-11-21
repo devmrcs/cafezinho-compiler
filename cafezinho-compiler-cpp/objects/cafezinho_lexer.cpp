@@ -1,4 +1,4 @@
-#line 2 "lexer.cpp"
+#line 2 "cafezinho_lexer.cpp"
 	
 	#pragma warning (disable: 4005)
 
@@ -7,14 +7,14 @@
 
 	using namespace std;
 
-	#include "parser.h"
+	#include "cafezinho_parser.h"
 
     static void comment(void);
     static void multiLineString(void);
 
     extern void yyerror(const char* msg);
 
-#line 18 "lexer.cpp"
+#line 18 "cafezinho_lexer.cpp"
 
 #define  YY_INT_ALIGNED short int
 
@@ -540,9 +540,9 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "lexer.l"
+#line 1 "cafezinho.l"
 
-#line 546 "lexer.cpp"
+#line 546 "cafezinho_lexer.cpp"
 
 #define INITIAL 0
 
@@ -759,10 +759,10 @@ YY_DECL
 		}
 
 	{
-#line 25 "lexer.l"
+#line 25 "cafezinho.l"
 
 
-#line 766 "lexer.cpp"
+#line 766 "cafezinho_lexer.cpp"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -821,242 +821,242 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 27 "lexer.l"
+#line 27 "cafezinho.l"
 { return (VIRGULA); }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 28 "lexer.l"
+#line 28 "cafezinho.l"
 { return (PONTOVIRGULA); }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 29 "lexer.l"
+#line 29 "cafezinho.l"
 { return (INTERROGACAO); }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 30 "lexer.l"
+#line 30 "cafezinho.l"
 { return (DOISPONTOS); }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 31 "lexer.l"
+#line 31 "cafezinho.l"
 { return (EXCLAMACAO); }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 33 "lexer.l"
+#line 33 "cafezinho.l"
 { return (ABRECHAVES); }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 34 "lexer.l"
+#line 34 "cafezinho.l"
 { return (FECHACHAVES); }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 35 "lexer.l"
+#line 35 "cafezinho.l"
 { return (ABREPARENTESES); }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 36 "lexer.l"
+#line 36 "cafezinho.l"
 { return (FECHAPARENTESES); }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 37 "lexer.l"
+#line 37 "cafezinho.l"
 { return (ABRECOLCHETES); }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 38 "lexer.l"
+#line 38 "cafezinho.l"
 { return (FECHACOLCHETES); }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 40 "lexer.l"
+#line 40 "cafezinho.l"
 { return (MENOR); }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 41 "lexer.l"
+#line 41 "cafezinho.l"
 { return (MAIOR); }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 42 "lexer.l"
+#line 42 "cafezinho.l"
 { return (MENORIGUAL); }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 43 "lexer.l"
+#line 43 "cafezinho.l"
 { return (MAIORIGUAL); }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 44 "lexer.l"
+#line 44 "cafezinho.l"
 { return (MENOS); }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 45 "lexer.l"
+#line 45 "cafezinho.l"
 { return (MAIS); }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 46 "lexer.l"
+#line 46 "cafezinho.l"
 { return (VEZES); }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 47 "lexer.l"
+#line 47 "cafezinho.l"
 { return (DIVIDIR); }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 48 "lexer.l"
+#line 48 "cafezinho.l"
 { return (RESTO); }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 49 "lexer.l"
+#line 49 "cafezinho.l"
 { return (IGUAL); }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 50 "lexer.l"
+#line 50 "cafezinho.l"
 { return (IGUALDUPLO); }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 51 "lexer.l"
+#line 51 "cafezinho.l"
 { return (DIFERENTE); }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 52 "lexer.l"
+#line 52 "cafezinho.l"
 { return (E); }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 53 "lexer.l"
+#line 53 "cafezinho.l"
 { return (OU); }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 55 "lexer.l"
+#line 55 "cafezinho.l"
 { return (ENQUANTO); }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 56 "lexer.l"
+#line 56 "cafezinho.l"
 { return (SE); }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 57 "lexer.l"
+#line 57 "cafezinho.l"
 { return (ENTAO); }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 58 "lexer.l"
+#line 58 "cafezinho.l"
 { return (SENAO); }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 59 "lexer.l"
+#line 59 "cafezinho.l"
 { return (ESCREVA); }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 60 "lexer.l"
+#line 60 "cafezinho.l"
 { return (RETORNE); }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 61 "lexer.l"
+#line 61 "cafezinho.l"
 { return (LEIA); }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 62 "lexer.l"
+#line 62 "cafezinho.l"
 { return (EXECUTE); }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 63 "lexer.l"
+#line 63 "cafezinho.l"
 { return (PROGRAMA); }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 64 "lexer.l"
+#line 64 "cafezinho.l"
 { return (INT); }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 65 "lexer.l"
+#line 65 "cafezinho.l"
 { return (CAR); }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 66 "lexer.l"
-{ cout << "Leu uma linha" ; return (NOVALINHA); }
+#line 66 "cafezinho.l"
+{ return (NOVALINHA); }
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 68 "lexer.l"
+#line 68 "cafezinho.l"
 { return (INTCONST); }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 69 "lexer.l"
+#line 69 "cafezinho.l"
 { return (ID); }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 71 "lexer.l"
+#line 71 "cafezinho.l"
 { return (CARCONST); }
 	YY_BREAK
 case 41:
 /* rule 41 can match eol */
 YY_RULE_SETUP
-#line 72 "lexer.l"
+#line 72 "cafezinho.l"
 { multiLineString(); }
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 73 "lexer.l"
+#line 73 "cafezinho.l"
 { comment(); }
 	YY_BREAK
 case 43:
 /* rule 43 can match eol */
 YY_RULE_SETUP
-#line 75 "lexer.l"
+#line 75 "cafezinho.l"
 { yylineno++; }
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 76 "lexer.l"
+#line 76 "cafezinho.l"
 { }
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 77 "lexer.l"
+#line 77 "cafezinho.l"
 { }
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 79 "lexer.l"
+#line 79 "cafezinho.l"
 { yyerror("invalid character"); }
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 81 "lexer.l"
+#line 81 "cafezinho.l"
 ECHO;
 	YY_BREAK
-#line 1060 "lexer.cpp"
+#line 1060 "cafezinho_lexer.cpp"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2061,7 +2061,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 81 "lexer.l"
+#line 81 "cafezinho.l"
 
 
 static void comment(void) {

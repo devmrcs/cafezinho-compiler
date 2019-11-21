@@ -66,7 +66,7 @@
 
 
 /* First part of user prologue.  */
-#line 3 "parser.y" /* yacc.c:337  */
+#line 3 "cafezinho.y" /* yacc.c:337  */
 
 	#include <cmath>
 	#include <cstdio>
@@ -83,7 +83,7 @@
 
 	using namespace std;
 
-#line 87 "parser.cpp" /* yacc.c:337  */
+#line 87 "cafezinho_parser.cpp" /* yacc.c:337  */
 # ifndef YY_NULLPTR
 #  if defined __cplusplus
 #   if 201103L <= __cplusplus
@@ -105,9 +105,9 @@
 #endif
 
 /* In a future release of Bison, this section will be replaced
-   by #include "parser.h".  */
-#ifndef YY_YY_PARSER_H_INCLUDED
-# define YY_YY_PARSER_H_INCLUDED
+   by #include "cafezinho_parser.h".  */
+#ifndef YY_YY_CAFEZINHO_PARSER_H_INCLUDED
+# define YY_YY_CAFEZINHO_PARSER_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -176,7 +176,7 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_PARSER_H_INCLUDED  */
+#endif /* !YY_YY_CAFEZINHO_PARSER_H_INCLUDED  */
 
 
 
@@ -1370,7 +1370,7 @@ yyreduce:
   switch (yyn)
     {
       
-#line 1374 "parser.cpp" /* yacc.c:1652  */
+#line 1374 "cafezinho_parser.cpp" /* yacc.c:1652  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1601,5 +1601,5 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 178 "parser.y" /* yacc.c:1918  */
+#line 178 "cafezinho.y" /* yacc.c:1918  */
 

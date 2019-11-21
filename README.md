@@ -10,5 +10,3 @@ Como executar
   - `$make`
   - `$./cafezinho < entrada`
 
-Autor: Marcos Souza
-

@@ -1,4 +1,4 @@
-%defines "parser.h"
+%defines "cafezinho_parser.h"
 
 %{
 	#include <cmath>
