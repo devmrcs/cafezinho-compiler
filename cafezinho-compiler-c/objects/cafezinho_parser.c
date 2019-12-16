@@ -86,15 +86,39 @@ void yyerror(char const *messageError);
 //Definicões das funções utilizadas na Árvore Abstrata
 NodeTree* makeNode(TypesOperators typeOperator,  int line, NodeTree* nodeTree1, NodeTree* nodeTree2, char* lexema);
 NodeTree* makeNodeTernary(TypesOperators typeOperator,  int line, NodeTree* nodeTree1, NodeTree* nodeTree2, NodeTree* nodeTree3, char* lexema);
-void percorreArvore(NodeTree* nodeInTree, int count);
-void printElements(NodeTree* nodeInTree, char* nameOperator);
+void walkTree(NodeTree* nodeInTree, int count);
+void getNameOperatorAndLine(NodeTree* nodeInTree, char* nameOperator);
 void printTabs(int count);
-
 
 NodeTree* rootTree;
 char nameOperator[200];
+char nameTypeOperator[200];
+//FIM ARVORE
 
-#line 98 "cafezinho_parser.c"
+//PILHAS
+typedef struct nodeStackTree {
+    struct nodeStackTree *nodeStackTreeLeft;
+    struct nodeStackTree *nodeStackTreeRight;
+    char strTypeOperator[40];
+    char id[40];
+} NodeTreeStack;
+
+typedef struct stackNode {
+    struct nodeStackTree* pointerNodeStackTree;
+    struct stackNode* next;
+}NodeStack;
+
+void preorderStackSearch(NodeTreeStack *root);
+void inserirNoArvorePilha(NodeTreeStack **root,char identifier[], char strTypeOperator[]);
+void printStack (NodeStack *topStack);
+void inserir (NodeStack **topStack, char lexema[], char strTypeOperator[]);
+
+NodeStack* topStack = NULL;
+
+void getTypeOperator2String(TypesOperators typeOperator, char* nameTypeOperator);
+
+
+#line 122 "cafezinho_parser.c"
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus
@@ -180,13 +204,13 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 33 "cafezinho_parser.y"
+#line 57 "cafezinho_parser.y"
 
     int nlinha;
     char* tokenLexema;
     NodeTree* PointerTreeNode;
 
-#line 190 "cafezinho_parser.c"
+#line 214 "cafezinho_parser.c"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -493,16 +517,16 @@ static const yytype_uint8 yytranslate[] =
 
 #if YYDEBUG
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
-static const yytype_uint8 yyrline[] =
+static const yytype_uint16 yyrline[] =
 {
-       0,    59,    59,    63,    67,    72,    77,    81,    85,    89,
-      93,    97,   101,   102,   106,   110,   114,   118,   125,   126,
-     130,   131,   135,   142,   143,   147,   148,   152,   153,   154,
-     155,   156,   157,   158,   159,   160,   161,   162,   166,   170,
-     171,   175,   176,   180,   181,   185,   186,   190,   191,   192,
-     196,   197,   198,   199,   200,   204,   205,   206,   210,   211,
-     212,   213,   217,   218,   219,   223,   224,   228,   229,   230,
-     231,   232,   233,   234,   238,   239
+       0,    83,    83,    87,    91,    96,   101,   105,   112,   116,
+     120,   124,   128,   129,   133,   137,   141,   145,   152,   153,
+     157,   158,   162,   169,   170,   174,   175,   179,   180,   181,
+     182,   183,   184,   185,   186,   187,   188,   189,   193,   197,
+     198,   202,   203,   207,   208,   212,   213,   217,   218,   219,
+     223,   224,   225,   226,   227,   231,   232,   233,   237,   238,
+     239,   240,   244,   245,   246,   250,   251,   255,   256,   257,
+     258,   259,   260,   261,   265,   266
 };
 #endif
 
@@ -1392,486 +1416,489 @@ yyreduce:
   switch (yyn)
     {
   case 2:
-#line 59 "cafezinho_parser.y"
+#line 83 "cafezinho_parser.y"
     { 	rootTree = makeNode(program, numLinha, (yyvsp[-1].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL); }
-#line 1398 "cafezinho_parser.c"
+#line 1422 "cafezinho_parser.c"
     break;
 
   case 3:
-#line 63 "cafezinho_parser.y"
+#line 87 "cafezinho_parser.y"
     {
-																			NodeTree* aux = makeNode((yyvsp[-4].PointerTreeNode)->typeOperator, (yyvsp[-4].PointerTreeNode)->line, NULL, NULL, (yyvsp[-3].tokenLexema));
-                                                                        	(yyval.PointerTreeNode) = makeNodeTernary(declarations, numLinha, aux , (yyvsp[-2].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL);
+																			NodeTree* newNodeTree = makeNode((yyvsp[-4].PointerTreeNode)->typeOperator, (yyvsp[-4].PointerTreeNode)->line, NULL, NULL, (yyvsp[-3].tokenLexema));
+                                                                        	(yyval.PointerTreeNode) = makeNodeTernary(declarations, numLinha, newNodeTree , (yyvsp[-2].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL);
 																		}
-#line 1407 "cafezinho_parser.c"
+#line 1431 "cafezinho_parser.c"
     break;
 
   case 4:
-#line 67 "cafezinho_parser.y"
+#line 91 "cafezinho_parser.y"
     {
 	  																		TypesOperators tmp = (yyvsp[-7].PointerTreeNode)->typeOperator == integer ? integer_array : character_array;
-	  																		NodeTree* aux = makeNode(tmp, (yyvsp[-7].PointerTreeNode)->line, NULL, NULL, (yyvsp[-6].tokenLexema));
-                                                                        	(yyval.PointerTreeNode) = makeNodeTernary(declarations, numLinha, aux, (yyvsp[-2].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL);
+	  																		NodeTree* newNodeTree = makeNode(tmp, (yyvsp[-7].PointerTreeNode)->line, NULL, NULL, (yyvsp[-6].tokenLexema));
+                                                                        	(yyval.PointerTreeNode) = makeNodeTernary(declarations, numLinha, newNodeTree, (yyvsp[-2].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL);
                                                                       	}
-#line 1417 "cafezinho_parser.c"
+#line 1441 "cafezinho_parser.c"
     break;
 
   case 5:
-#line 72 "cafezinho_parser.y"
+#line 96 "cafezinho_parser.y"
     {
 	  																		(yyvsp[-1].PointerTreeNode)->typeOperator = ((yyvsp[-3].PointerTreeNode)->typeOperator == integer ? integer_method : character_method);
 																			(yyvsp[-1].PointerTreeNode)->lexema = (yyvsp[-2].tokenLexema);
 	  																		(yyval.PointerTreeNode) = makeNode(declarations, numLinha, (yyvsp[-1].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL);
 																		}
-#line 1427 "cafezinho_parser.c"
+#line 1451 "cafezinho_parser.c"
     break;
 
   case 6:
-#line 77 "cafezinho_parser.y"
+#line 101 "cafezinho_parser.y"
     { 	(yyval.PointerTreeNode) = makeNode(declarations, numLinha, NULL, NULL, NULL); }
-#line 1433 "cafezinho_parser.c"
-    break;
-
-  case 7:
-#line 81 "cafezinho_parser.y"
-    { (yyval.PointerTreeNode) = (yyvsp[0].PointerTreeNode); }
-#line 1439 "cafezinho_parser.c"
-    break;
-
-  case 8:
-#line 85 "cafezinho_parser.y"
-    {
-																			NodeTree* aux = makeNode(unknown, numLinha, NULL, NULL, (yyvsp[-1].tokenLexema));
-																			(yyval.PointerTreeNode) = makeNode(variable_list, numLinha, aux, (yyvsp[0].PointerTreeNode), NULL);
-																		}
-#line 1448 "cafezinho_parser.c"
-    break;
-
-  case 9:
-#line 89 "cafezinho_parser.y"
-    {
-	  																		NodeTree* aux = makeNode(unknown, numLinha, NULL, NULL, (yyvsp[-4].tokenLexema));
-																			(yyval.PointerTreeNode) = makeNode(variable_list, numLinha, aux, (yyvsp[0].PointerTreeNode), NULL);
-																		}
 #line 1457 "cafezinho_parser.c"
     break;
 
-  case 10:
-#line 93 "cafezinho_parser.y"
-    { 	(yyval.PointerTreeNode) = makeNode(variable_list, numLinha, NULL, NULL, NULL); }
-#line 1463 "cafezinho_parser.c"
+  case 7:
+#line 105 "cafezinho_parser.y"
+    { 
+                                                                            (yyval.PointerTreeNode) = (yyvsp[0].PointerTreeNode);
+                                                                            (yyval.PointerTreeNode)->typeOperator = typeDeclProg;
+                                                                        }
+#line 1466 "cafezinho_parser.c"
     break;
 
-  case 11:
-#line 97 "cafezinho_parser.y"
-    { 	(yyval.PointerTreeNode) = makeNode(unknown, numLinha, (yyvsp[-2].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL); }
-#line 1469 "cafezinho_parser.c"
-    break;
-
-  case 12:
-#line 101 "cafezinho_parser.y"
-    { 	(yyval.PointerTreeNode) = makeNode(parameter_list, numLinha, NULL, NULL, NULL); }
+  case 8:
+#line 112 "cafezinho_parser.y"
+    {
+																			NodeTree* newNodeTree = makeNode(unknown, numLinha, NULL, NULL, (yyvsp[-1].tokenLexema));
+																			(yyval.PointerTreeNode) = makeNode(variable_list, numLinha, newNodeTree, (yyvsp[0].PointerTreeNode), NULL);
+																		}
 #line 1475 "cafezinho_parser.c"
     break;
 
-  case 13:
-#line 102 "cafezinho_parser.y"
-    { 	(yyval.PointerTreeNode) = (yyvsp[0].PointerTreeNode); }
-#line 1481 "cafezinho_parser.c"
+  case 9:
+#line 116 "cafezinho_parser.y"
+    {
+	  																		NodeTree* newNodeTree = makeNode(unknown, numLinha, NULL, NULL, (yyvsp[-4].tokenLexema));
+																			(yyval.PointerTreeNode) = makeNode(variable_list, numLinha, newNodeTree, (yyvsp[0].PointerTreeNode), NULL);
+																		}
+#line 1484 "cafezinho_parser.c"
     break;
 
-  case 14:
-#line 106 "cafezinho_parser.y"
-    {
-												 							NodeTree* aux = makeNode((yyvsp[-1].PointerTreeNode)->typeOperator, (yyvsp[-1].PointerTreeNode)->line, NULL, NULL, (yyvsp[0].tokenLexema));
-																			(yyval.PointerTreeNode) = makeNode(parameter_list, numLinha, aux, NULL, NULL);; 
-																		}
+  case 10:
+#line 120 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = makeNode(variable_list, numLinha, NULL, NULL, NULL); }
 #line 1490 "cafezinho_parser.c"
     break;
 
-  case 15:
-#line 110 "cafezinho_parser.y"
-    {
-												 							NodeTree* aux = makeNode((yyvsp[-3].PointerTreeNode)->typeOperator == integer ? integer_array: character_array, (yyvsp[-3].PointerTreeNode)->line, NULL, NULL, (yyvsp[-2].tokenLexema));
-																			(yyval.PointerTreeNode) = makeNode(parameter_list, numLinha, aux, NULL, NULL);; 
-																		}
-#line 1499 "cafezinho_parser.c"
+  case 11:
+#line 124 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = makeNode(unknown, numLinha, (yyvsp[-2].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL); }
+#line 1496 "cafezinho_parser.c"
     break;
 
-  case 16:
-#line 114 "cafezinho_parser.y"
-    {
-												 							NodeTree* aux = makeNode((yyvsp[-3].PointerTreeNode)->typeOperator, (yyvsp[-3].PointerTreeNode)->line, NULL, NULL, (yyvsp[-2].tokenLexema));
-																			(yyval.PointerTreeNode) = makeNode(parameter_list, numLinha, aux, (yyvsp[0].PointerTreeNode), NULL);; 
-																		}
+  case 12:
+#line 128 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = makeNode(parameter_list, numLinha, NULL, NULL, NULL); }
+#line 1502 "cafezinho_parser.c"
+    break;
+
+  case 13:
+#line 129 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = (yyvsp[0].PointerTreeNode); }
 #line 1508 "cafezinho_parser.c"
     break;
 
-  case 17:
-#line 118 "cafezinho_parser.y"
+  case 14:
+#line 133 "cafezinho_parser.y"
     {
-												 							NodeTree* aux = makeNode((yyvsp[-5].PointerTreeNode)->typeOperator == integer ? integer_array: character_array, (yyvsp[-5].PointerTreeNode)->line, NULL, NULL, (yyvsp[-4].tokenLexema));
-																			(yyval.PointerTreeNode) = makeNode(parameter_list, numLinha, aux, (yyvsp[0].PointerTreeNode), NULL);; 
+												 							NodeTree* newNodeTree = makeNode((yyvsp[-1].PointerTreeNode)->typeOperator, (yyvsp[-1].PointerTreeNode)->line, NULL, NULL, (yyvsp[0].tokenLexema));
+																			(yyval.PointerTreeNode) = makeNode(parameter_list, numLinha, newNodeTree, NULL, NULL);; 
 																		}
 #line 1517 "cafezinho_parser.c"
     break;
 
-  case 18:
-#line 125 "cafezinho_parser.y"
-    { 	(yyval.PointerTreeNode) = makeNode(block, numLinha, (yyvsp[-2].PointerTreeNode), (yyvsp[-1].PointerTreeNode), NULL); }
-#line 1523 "cafezinho_parser.c"
+  case 15:
+#line 137 "cafezinho_parser.y"
+    {
+												 							NodeTree* newNodeTree = makeNode((yyvsp[-3].PointerTreeNode)->typeOperator == integer ? integer_array: character_array, (yyvsp[-3].PointerTreeNode)->line, NULL, NULL, (yyvsp[-2].tokenLexema));
+																			(yyval.PointerTreeNode) = makeNode(parameter_list, numLinha, newNodeTree, NULL, NULL);; 
+																		}
+#line 1526 "cafezinho_parser.c"
     break;
 
-  case 19:
-#line 126 "cafezinho_parser.y"
-    { 	(yyval.PointerTreeNode) = makeNode(block, numLinha, (yyvsp[-1].PointerTreeNode), NULL, NULL); }
-#line 1529 "cafezinho_parser.c"
-    break;
-
-  case 20:
-#line 130 "cafezinho_parser.y"
-    { 	(yyval.PointerTreeNode) = makeNode(variable_list, numLinha, NULL, NULL, NULL); }
+  case 16:
+#line 141 "cafezinho_parser.y"
+    {
+												 							NodeTree* newNodeTree = makeNode((yyvsp[-3].PointerTreeNode)->typeOperator, (yyvsp[-3].PointerTreeNode)->line, NULL, NULL, (yyvsp[-2].tokenLexema));
+																			(yyval.PointerTreeNode) = makeNode(parameter_list, numLinha, newNodeTree, (yyvsp[0].PointerTreeNode), NULL);; 
+																		}
 #line 1535 "cafezinho_parser.c"
     break;
 
-  case 21:
-#line 131 "cafezinho_parser.y"
+  case 17:
+#line 145 "cafezinho_parser.y"
     {
-												 							NodeTree* aux = makeNode((yyvsp[-4].PointerTreeNode)->typeOperator, (yyvsp[-4].PointerTreeNode)->line, NULL, NULL, (yyvsp[-3].tokenLexema));
-																			(yyval.PointerTreeNode) = makeNodeTernary(variable_list, numLinha, aux, (yyvsp[-2].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL);; 
+												 							NodeTree* newNodeTree = makeNode((yyvsp[-5].PointerTreeNode)->typeOperator == integer ? integer_array: character_array, (yyvsp[-5].PointerTreeNode)->line, NULL, NULL, (yyvsp[-4].tokenLexema));
+																			(yyval.PointerTreeNode) = makeNode(parameter_list, numLinha, newNodeTree, (yyvsp[0].PointerTreeNode), NULL);; 
 																		}
 #line 1544 "cafezinho_parser.c"
     break;
 
-  case 22:
-#line 135 "cafezinho_parser.y"
+  case 18:
+#line 152 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = makeNode(block, numLinha, (yyvsp[-2].PointerTreeNode), (yyvsp[-1].PointerTreeNode), NULL); }
+#line 1550 "cafezinho_parser.c"
+    break;
+
+  case 19:
+#line 153 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = makeNode(block, numLinha, (yyvsp[-1].PointerTreeNode), NULL, NULL); }
+#line 1556 "cafezinho_parser.c"
+    break;
+
+  case 20:
+#line 157 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = makeNode(variable_list, numLinha, NULL, NULL, NULL); }
+#line 1562 "cafezinho_parser.c"
+    break;
+
+  case 21:
+#line 158 "cafezinho_parser.y"
     {
-												 							NodeTree* aux = makeNode((yyvsp[-7].PointerTreeNode)->typeOperator, (yyvsp[-7].PointerTreeNode)->line, NULL, NULL, (yyvsp[-6].tokenLexema));
-																			(yyval.PointerTreeNode) = makeNodeTernary(variable_list, numLinha, aux, (yyvsp[-2].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL);; 
+												 							NodeTree* newNodeTree = makeNode((yyvsp[-4].PointerTreeNode)->typeOperator, (yyvsp[-4].PointerTreeNode)->line, NULL, NULL, (yyvsp[-3].tokenLexema));
+																			(yyval.PointerTreeNode) = makeNodeTernary(variable_list, numLinha, newNodeTree, (yyvsp[-2].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL);; 
 																		}
-#line 1553 "cafezinho_parser.c"
-    break;
-
-  case 23:
-#line 142 "cafezinho_parser.y"
-    { 	(yyval.PointerTreeNode) = makeNode(integer, numLinha, NULL, NULL, NULL); }
-#line 1559 "cafezinho_parser.c"
-    break;
-
-  case 24:
-#line 143 "cafezinho_parser.y"
-    { 	(yyval.PointerTreeNode) = makeNode(character, numLinha, NULL, NULL, NULL); }
-#line 1565 "cafezinho_parser.c"
-    break;
-
-  case 25:
-#line 147 "cafezinho_parser.y"
-    { 	(yyval.PointerTreeNode) = makeNode(statements, numLinha, (yyvsp[0].PointerTreeNode), NULL, NULL); }
 #line 1571 "cafezinho_parser.c"
     break;
 
+  case 22:
+#line 162 "cafezinho_parser.y"
+    {
+												 							NodeTree* newNodeTree = makeNode((yyvsp[-7].PointerTreeNode)->typeOperator, (yyvsp[-7].PointerTreeNode)->line, NULL, NULL, (yyvsp[-6].tokenLexema));
+																			(yyval.PointerTreeNode) = makeNodeTernary(variable_list, numLinha, newNodeTree, (yyvsp[-2].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL);; 
+																		}
+#line 1580 "cafezinho_parser.c"
+    break;
+
+  case 23:
+#line 169 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = makeNode(integer, numLinha, NULL, NULL, NULL); }
+#line 1586 "cafezinho_parser.c"
+    break;
+
+  case 24:
+#line 170 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = makeNode(character, numLinha, NULL, NULL, NULL); }
+#line 1592 "cafezinho_parser.c"
+    break;
+
+  case 25:
+#line 174 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = makeNode(statements, numLinha, (yyvsp[0].PointerTreeNode), NULL, NULL); }
+#line 1598 "cafezinho_parser.c"
+    break;
+
   case 26:
-#line 148 "cafezinho_parser.y"
+#line 175 "cafezinho_parser.y"
     { 	(yyval.PointerTreeNode) = makeNode(statements, numLinha, (yyvsp[-1].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL); }
-#line 1577 "cafezinho_parser.c"
+#line 1604 "cafezinho_parser.c"
     break;
 
   case 27:
-#line 152 "cafezinho_parser.y"
+#line 179 "cafezinho_parser.y"
     { 	(yyval.PointerTreeNode) = makeNode(statements, numLinha, NULL, NULL, NULL); }
-#line 1583 "cafezinho_parser.c"
+#line 1610 "cafezinho_parser.c"
     break;
 
   case 28:
-#line 153 "cafezinho_parser.y"
+#line 180 "cafezinho_parser.y"
     { 	(yyval.PointerTreeNode) = (yyvsp[-1].PointerTreeNode); }
-#line 1589 "cafezinho_parser.c"
+#line 1616 "cafezinho_parser.c"
     break;
 
   case 29:
-#line 154 "cafezinho_parser.y"
+#line 181 "cafezinho_parser.y"
     { 	(yyval.PointerTreeNode) = makeNode(returns, numLinha, (yyvsp[-1].PointerTreeNode), NULL, NULL); }
-#line 1595 "cafezinho_parser.c"
+#line 1622 "cafezinho_parser.c"
     break;
 
   case 30:
-#line 155 "cafezinho_parser.y"
+#line 182 "cafezinho_parser.y"
     {	(yyval.PointerTreeNode) = (yyvsp[-1].PointerTreeNode); }
-#line 1601 "cafezinho_parser.c"
+#line 1628 "cafezinho_parser.c"
     break;
 
   case 31:
-#line 156 "cafezinho_parser.y"
+#line 183 "cafezinho_parser.y"
     { 	(yyval.PointerTreeNode) = (yyvsp[-1].PointerTreeNode); }
-#line 1607 "cafezinho_parser.c"
+#line 1634 "cafezinho_parser.c"
     break;
 
   case 32:
-#line 157 "cafezinho_parser.y"
+#line 184 "cafezinho_parser.y"
     { 	(yyval.PointerTreeNode) = makeNode(statements, numLinha, NULL, NULL, NULL); }
-#line 1613 "cafezinho_parser.c"
+#line 1640 "cafezinho_parser.c"
     break;
 
   case 33:
-#line 158 "cafezinho_parser.y"
+#line 185 "cafezinho_parser.y"
     { 	(yyval.PointerTreeNode) = makeNode(statements, numLinha, NULL, NULL, NULL); }
-#line 1619 "cafezinho_parser.c"
+#line 1646 "cafezinho_parser.c"
     break;
 
   case 34:
-#line 159 "cafezinho_parser.y"
+#line 186 "cafezinho_parser.y"
     { 	(yyval.PointerTreeNode) = makeNode(if_while, numLinha, (yyvsp[-3].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL); }
-#line 1625 "cafezinho_parser.c"
+#line 1652 "cafezinho_parser.c"
     break;
 
   case 35:
-#line 160 "cafezinho_parser.y"
+#line 187 "cafezinho_parser.y"
     { 	(yyval.PointerTreeNode) = makeNodeTernary(if_while, numLinha, (yyvsp[-5].PointerTreeNode), (yyvsp[-2].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL); }
-#line 1631 "cafezinho_parser.c"
+#line 1658 "cafezinho_parser.c"
     break;
 
   case 36:
-#line 161 "cafezinho_parser.y"
+#line 188 "cafezinho_parser.y"
     { 	(yyval.PointerTreeNode) = makeNode(if_while, numLinha, (yyvsp[-3].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL); }
-#line 1637 "cafezinho_parser.c"
+#line 1664 "cafezinho_parser.c"
     break;
 
   case 37:
-#line 162 "cafezinho_parser.y"
+#line 189 "cafezinho_parser.y"
     { 	(yyval.PointerTreeNode) = (yyvsp[0].PointerTreeNode); }
-#line 1643 "cafezinho_parser.c"
+#line 1670 "cafezinho_parser.c"
     break;
 
   case 38:
-#line 166 "cafezinho_parser.y"
+#line 193 "cafezinho_parser.y"
     {	(yyval.PointerTreeNode) = (yyvsp[0].PointerTreeNode); }
-#line 1649 "cafezinho_parser.c"
+#line 1676 "cafezinho_parser.c"
     break;
 
   case 39:
-#line 170 "cafezinho_parser.y"
+#line 197 "cafezinho_parser.y"
     { 	(yyval.PointerTreeNode) = (yyvsp[0].PointerTreeNode); }
-#line 1655 "cafezinho_parser.c"
+#line 1682 "cafezinho_parser.c"
     break;
 
   case 40:
-#line 171 "cafezinho_parser.y"
+#line 198 "cafezinho_parser.y"
     { 	(yyval.PointerTreeNode) = makeNode(assignment, numLinha, (yyvsp[-2].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL); }
-#line 1661 "cafezinho_parser.c"
+#line 1688 "cafezinho_parser.c"
     break;
 
   case 41:
-#line 175 "cafezinho_parser.y"
+#line 202 "cafezinho_parser.y"
     { 	(yyval.PointerTreeNode) = (yyvsp[0].PointerTreeNode); }
-#line 1667 "cafezinho_parser.c"
+#line 1694 "cafezinho_parser.c"
     break;
 
   case 42:
-#line 176 "cafezinho_parser.y"
+#line 203 "cafezinho_parser.y"
     { 	(yyval.PointerTreeNode) = makeNodeTernary(if_while, numLinha, (yyvsp[-4].PointerTreeNode), (yyvsp[-2].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL); }
-#line 1673 "cafezinho_parser.c"
+#line 1700 "cafezinho_parser.c"
     break;
 
   case 43:
-#line 180 "cafezinho_parser.y"
+#line 207 "cafezinho_parser.y"
     { 	(yyval.PointerTreeNode) = makeNode(logical_operator, numLinha, (yyvsp[-2].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL); }
-#line 1679 "cafezinho_parser.c"
+#line 1706 "cafezinho_parser.c"
     break;
 
   case 44:
-#line 181 "cafezinho_parser.y"
+#line 208 "cafezinho_parser.y"
     { 	(yyval.PointerTreeNode) = (yyvsp[0].PointerTreeNode); }
-#line 1685 "cafezinho_parser.c"
+#line 1712 "cafezinho_parser.c"
     break;
 
   case 45:
-#line 185 "cafezinho_parser.y"
+#line 212 "cafezinho_parser.y"
     { 	(yyval.PointerTreeNode) = makeNode(logical_operator, numLinha, (yyvsp[-2].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL); }
-#line 1691 "cafezinho_parser.c"
+#line 1718 "cafezinho_parser.c"
     break;
 
   case 46:
-#line 186 "cafezinho_parser.y"
+#line 213 "cafezinho_parser.y"
     { 	(yyval.PointerTreeNode) = (yyvsp[0].PointerTreeNode); }
-#line 1697 "cafezinho_parser.c"
+#line 1724 "cafezinho_parser.c"
     break;
 
   case 47:
-#line 190 "cafezinho_parser.y"
+#line 217 "cafezinho_parser.y"
     { 	(yyval.PointerTreeNode) = makeNode(relational_operator, numLinha, (yyvsp[-2].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL); }
-#line 1703 "cafezinho_parser.c"
+#line 1730 "cafezinho_parser.c"
     break;
 
   case 48:
-#line 191 "cafezinho_parser.y"
+#line 218 "cafezinho_parser.y"
     { 	(yyval.PointerTreeNode) = makeNode(relational_operator, numLinha, (yyvsp[-3].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL); }
-#line 1709 "cafezinho_parser.c"
+#line 1736 "cafezinho_parser.c"
     break;
 
   case 49:
-#line 192 "cafezinho_parser.y"
+#line 219 "cafezinho_parser.y"
     { 	(yyval.PointerTreeNode) = (yyvsp[0].PointerTreeNode); }
-#line 1715 "cafezinho_parser.c"
+#line 1742 "cafezinho_parser.c"
     break;
 
   case 50:
-#line 196 "cafezinho_parser.y"
+#line 223 "cafezinho_parser.y"
     { 	(yyval.PointerTreeNode) = makeNode(relational_operator, numLinha, (yyvsp[-2].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL); }
-#line 1721 "cafezinho_parser.c"
+#line 1748 "cafezinho_parser.c"
     break;
 
   case 51:
-#line 197 "cafezinho_parser.y"
+#line 224 "cafezinho_parser.y"
     { 	(yyval.PointerTreeNode) = makeNode(relational_operator, numLinha, (yyvsp[-2].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL); }
-#line 1727 "cafezinho_parser.c"
+#line 1754 "cafezinho_parser.c"
     break;
 
   case 52:
-#line 198 "cafezinho_parser.y"
+#line 225 "cafezinho_parser.y"
     { 	(yyval.PointerTreeNode) = makeNode(relational_operator, numLinha, (yyvsp[-2].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL); }
-#line 1733 "cafezinho_parser.c"
+#line 1760 "cafezinho_parser.c"
     break;
 
   case 53:
-#line 199 "cafezinho_parser.y"
+#line 226 "cafezinho_parser.y"
     { 	(yyval.PointerTreeNode) = makeNode(relational_operator, numLinha, (yyvsp[-2].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL); }
-#line 1739 "cafezinho_parser.c"
+#line 1766 "cafezinho_parser.c"
     break;
 
   case 54:
-#line 200 "cafezinho_parser.y"
+#line 227 "cafezinho_parser.y"
     { 	(yyval.PointerTreeNode) = (yyvsp[0].PointerTreeNode); }
-#line 1745 "cafezinho_parser.c"
+#line 1772 "cafezinho_parser.c"
     break;
 
   case 55:
-#line 204 "cafezinho_parser.y"
+#line 231 "cafezinho_parser.y"
     { 	(yyval.PointerTreeNode) = makeNode(arithmetic_operator, numLinha, (yyvsp[-2].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL); }
-#line 1751 "cafezinho_parser.c"
+#line 1778 "cafezinho_parser.c"
     break;
 
   case 56:
-#line 205 "cafezinho_parser.y"
+#line 232 "cafezinho_parser.y"
     { 	(yyval.PointerTreeNode) = makeNode(arithmetic_operator, numLinha, (yyvsp[-2].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL); }
-#line 1757 "cafezinho_parser.c"
+#line 1784 "cafezinho_parser.c"
     break;
 
   case 57:
-#line 206 "cafezinho_parser.y"
+#line 233 "cafezinho_parser.y"
     { 	(yyval.PointerTreeNode) = (yyvsp[0].PointerTreeNode); }
-#line 1763 "cafezinho_parser.c"
+#line 1790 "cafezinho_parser.c"
     break;
 
   case 58:
-#line 210 "cafezinho_parser.y"
+#line 237 "cafezinho_parser.y"
     { 	(yyval.PointerTreeNode) = makeNode(arithmetic_operator, numLinha, (yyvsp[-2].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL); }
-#line 1769 "cafezinho_parser.c"
+#line 1796 "cafezinho_parser.c"
     break;
 
   case 59:
-#line 211 "cafezinho_parser.y"
+#line 238 "cafezinho_parser.y"
     { 	(yyval.PointerTreeNode) = makeNode(arithmetic_operator, numLinha, (yyvsp[-2].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL); }
-#line 1775 "cafezinho_parser.c"
+#line 1802 "cafezinho_parser.c"
     break;
 
   case 60:
-#line 212 "cafezinho_parser.y"
+#line 239 "cafezinho_parser.y"
     { 	(yyval.PointerTreeNode) = makeNode(arithmetic_operator, numLinha, (yyvsp[-2].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL); }
-#line 1781 "cafezinho_parser.c"
+#line 1808 "cafezinho_parser.c"
     break;
 
   case 61:
-#line 213 "cafezinho_parser.y"
+#line 240 "cafezinho_parser.y"
     { 	(yyval.PointerTreeNode) = (yyvsp[0].PointerTreeNode); }
-#line 1787 "cafezinho_parser.c"
+#line 1814 "cafezinho_parser.c"
     break;
 
   case 62:
-#line 217 "cafezinho_parser.y"
+#line 244 "cafezinho_parser.y"
     { 	(yyval.PointerTreeNode) = makeNode(arithmetic_operator, numLinha, (yyvsp[0].PointerTreeNode), NULL, NULL); }
-#line 1793 "cafezinho_parser.c"
+#line 1820 "cafezinho_parser.c"
     break;
 
   case 63:
-#line 218 "cafezinho_parser.y"
+#line 245 "cafezinho_parser.y"
     { 	(yyval.PointerTreeNode) = makeNode(logical_operator, numLinha, (yyvsp[0].PointerTreeNode), NULL, NULL); }
-#line 1799 "cafezinho_parser.c"
+#line 1826 "cafezinho_parser.c"
     break;
 
   case 64:
-#line 219 "cafezinho_parser.y"
+#line 246 "cafezinho_parser.y"
     { 	(yyval.PointerTreeNode) = (yyvsp[0].PointerTreeNode); }
-#line 1805 "cafezinho_parser.c"
+#line 1832 "cafezinho_parser.c"
     break;
 
   case 65:
-#line 223 "cafezinho_parser.y"
+#line 250 "cafezinho_parser.y"
     { 	(yyval.PointerTreeNode) = makeNode(single, numLinha, NULL, NULL, (yyvsp[-3].tokenLexema)); }
-#line 1811 "cafezinho_parser.c"
+#line 1838 "cafezinho_parser.c"
     break;
 
   case 66:
-#line 224 "cafezinho_parser.y"
+#line 251 "cafezinho_parser.y"
     { 	(yyval.PointerTreeNode) = makeNode(any, numLinha, NULL, NULL, (yyvsp[0].tokenLexema)); }
-#line 1817 "cafezinho_parser.c"
+#line 1844 "cafezinho_parser.c"
     break;
 
   case 67:
-#line 228 "cafezinho_parser.y"
+#line 255 "cafezinho_parser.y"
     { 	(yyval.PointerTreeNode) = makeNode(invocation, numLinha, (yyvsp[-1].PointerTreeNode), NULL, (yyvsp[-3].tokenLexema)); }
-#line 1823 "cafezinho_parser.c"
+#line 1850 "cafezinho_parser.c"
     break;
 
   case 68:
-#line 229 "cafezinho_parser.y"
+#line 256 "cafezinho_parser.y"
     { 	(yyval.PointerTreeNode) = makeNode(invocation, numLinha, NULL, NULL, (yyvsp[-2].tokenLexema)); }
-#line 1829 "cafezinho_parser.c"
+#line 1856 "cafezinho_parser.c"
     break;
 
   case 69:
-#line 230 "cafezinho_parser.y"
+#line 257 "cafezinho_parser.y"
     { 	(yyval.PointerTreeNode) = makeNode(single, numLinha, NULL, NULL, (yyvsp[-3].tokenLexema)); }
-#line 1835 "cafezinho_parser.c"
+#line 1862 "cafezinho_parser.c"
     break;
 
   case 70:
-#line 231 "cafezinho_parser.y"
+#line 258 "cafezinho_parser.y"
     { 	(yyval.PointerTreeNode) = makeNode(any, numLinha, NULL, NULL, NULL); }
-#line 1841 "cafezinho_parser.c"
+#line 1868 "cafezinho_parser.c"
     break;
 
   case 71:
-#line 232 "cafezinho_parser.y"
+#line 259 "cafezinho_parser.y"
     { 	(yyval.PointerTreeNode) = makeNode(character, numLinha, NULL, NULL, NULL); }
-#line 1847 "cafezinho_parser.c"
+#line 1874 "cafezinho_parser.c"
     break;
 
   case 72:
-#line 233 "cafezinho_parser.y"
+#line 260 "cafezinho_parser.y"
     { 	(yyval.PointerTreeNode) = makeNode(integer, numLinha, NULL, NULL, NULL); }
-#line 1853 "cafezinho_parser.c"
+#line 1880 "cafezinho_parser.c"
     break;
 
   case 73:
-#line 234 "cafezinho_parser.y"
+#line 261 "cafezinho_parser.y"
     { 	(yyval.PointerTreeNode) = (yyvsp[-1].PointerTreeNode); }
-#line 1859 "cafezinho_parser.c"
+#line 1886 "cafezinho_parser.c"
     break;
 
   case 74:
-#line 238 "cafezinho_parser.y"
+#line 265 "cafezinho_parser.y"
     { 	(yyval.PointerTreeNode) = makeNode(parameter_list, numLinha, (yyvsp[0].PointerTreeNode), NULL, NULL); }
-#line 1865 "cafezinho_parser.c"
+#line 1892 "cafezinho_parser.c"
     break;
 
   case 75:
-#line 239 "cafezinho_parser.y"
+#line 266 "cafezinho_parser.y"
     { 	(yyval.PointerTreeNode) = makeNode(parameter_list, numLinha, (yyvsp[0].PointerTreeNode), NULL, NULL); }
-#line 1871 "cafezinho_parser.c"
+#line 1898 "cafezinho_parser.c"
     break;
 
 
-#line 1875 "cafezinho_parser.c"
+#line 1902 "cafezinho_parser.c"
 
       default: break;
     }
@@ -2103,63 +2130,93 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 241 "cafezinho_parser.y"
+#line 268 "cafezinho_parser.y"
  /* Secao Epilogo*/   
 
+/*..................... MAIN..................*/
 int main(int argc, char** argv){
-  printf("> Start - Compiler Coffee\n\n");
+    printf("> Start - Compiler Coffee\n\n");
 
-  if(argc != 2){
-    errorInput = 1;
-    yyerror("Error: Input Mode: ./cafezinho namefile");
-  }
-     
-  yyin=fopen(argv[1], "r");
-  if(!yyin)
-      yyerror("Error: File cannot be opened\n");
-  yyparse();
+    if(argc != 2){
+        errorInput = 1;
+        yyerror("Error: Input Mode: ./cafezinho namefile");
+    }
 
-  percorreArvore(rootTree, 0);
-  printf("\n> End - Compiler Coffee\n");
+    yyin=fopen(argv[1], "r");
+    if(!yyin)
+        yyerror("Error: File cannot be opened\n");
+
+    yyparse();
+
+    printf("\n> . . . . . . . . Árvore abstrata . . . . . . . .\n\n");
+    walkTree(rootTree, 0);
+    printf("> . . . . . . . . . . . . . . . . . . . . . . . .\n\n");
+
+    printf("\n> . . . . . . . Tabela de simbolos . . . . . . .\n");
+    preorderStackSearch(topStack);
+    printf("> . . . . . . . . . . . . . . . . . . . . . . . .\n\n");
+
+    printf("\n> End - Compiler Coffee\n");
 }
+/*..................... MAIN..................*/
 
 void yyerror(char const *messageError) {
     if(errorLexical) {
         printf("%s in line %d - token: %s\n", messageError, numLinha, yytext);
     }
     else if(errorInput){
-      printf("%s\n", messageError);
+        printf("%s\n", messageError);
     }
     else{
-      printf("Syntatic error in %s ", yytext);
-      printf(" - line: %d \n", numLinha);
-      errorLexical = 1;
+        printf("Syntatic error in %s ", yytext);
+        printf(" - line: %d \n", numLinha);
+        errorLexical = 1;
     }
 
     printf("\n> End - Compiler Coffee\n");
     exit(1);
 }
 
-void printTabs(int count){
-	for(int count_tabs = 0; count_tabs < (count-1); count_tabs++)
-		printf("\t");
-	
-	return;
-}
-
-void percorreArvore(NodeTree* nodeInTree, int count){
+void walkTree(NodeTree* nodeInTree, int count){
     if(nodeInTree){
 		count++;
 
-        printElements(nodeInTree, nameOperator);
+		getNameOperatorAndLine(nodeInTree, nameOperator);
+
+        /*Inserting nodes into the stack*/
+
+        if (nodeInTree->typeOperator == typeDeclProg){
+			inserir(&topStack, NULL,NULL);
+        }
+
+		if (nodeInTree->typeOperator == declarations){
+			inserir(&topStack, NULL,NULL);
+        }  
+
+		// if ((nodeInTree->typeOperator == character) || (nodeInTree->typeOperator == integer)){
+	    // 	//strcpy (strTypeOperator,nodeInTree->lexema);   	
+        // }
+
+        if ((nodeInTree->typeOperator == variable_list) || (nodeInTree->typeOperator == parameter_list)){
+            
+	    	if(nodeInTree->nodeTree1 != NULL){
+                getTypeOperator2String(nodeInTree->nodeTree1->typeOperator, nameTypeOperator);
+                // printf("Token Lexema: %s\n", nodeInTree->nodeTree1->lexema);
+                // printf("Token TypeOperator: %s\n", nameTypeOperator);
+                
+                inserir(&topStack, nodeInTree->nodeTree1->lexema, nameTypeOperator);
+            }
+        }
+        /*-----------------------------*/
+
 		printTabs(count);
-        printf("[%d] %s", count, nameOperator);
+		printf("[%d] %s", count, nameOperator);
 
         if(nodeInTree->nodeTree1 != NULL) {
 			printTabs(count);
 			printf("> NodeTree 1 | [%d] {\n", count);
 
-			percorreArvore(nodeInTree->nodeTree1, count);
+			walkTree(nodeInTree->nodeTree1, count);
 
 			printTabs(count);
 			printf("}end NodeTree 1 | [%d]\n\n", count);
@@ -2169,7 +2226,7 @@ void percorreArvore(NodeTree* nodeInTree, int count){
 			printTabs(count);
 			printf("> NodeTree 2 | [%d] {\n", count);
 
-			percorreArvore(nodeInTree->nodeTree2, count);
+			walkTree(nodeInTree->nodeTree2, count);
 
 			printTabs(count);
 			printf("}end NodeTree 2 | [%d]\n\n", count);
@@ -2178,7 +2235,7 @@ void percorreArvore(NodeTree* nodeInTree, int count){
 			printTabs(count);
 			printf("> NodeTree 3 | [%d] {\n", count);
 
-			percorreArvore(nodeInTree->nodeTree3, count);
+			walkTree(nodeInTree->nodeTree3, count);
 
 			printTabs(count);
 			printf("}end NodeTree 3 | %d\n\n", count);
@@ -2187,115 +2244,224 @@ void percorreArvore(NodeTree* nodeInTree, int count){
     }
 }
 
+///Inserção na pilha de árvores
+void inserir (NodeStack **topStack, char lexema[], char strTypeOperator[]) {
+    if(lexema == NULL ){
+        NodeStack* newNodeStack;
+        NodeTreeStack *root = NULL;
+        newNodeStack = (NodeStack *) malloc (sizeof(NodeStack));
+            
+        if(newNodeStack == NULL){
+            printf("Error: newNodeStack memory allocation\n");
+            exit(1);
+        }
+        else {
+            if(*topStack == NULL){
+                newNodeStack->next = NULL;
+            }
+            else {
+                newNodeStack->next = *topStack;
+            }
+            
+            *topStack = newNodeStack;
+        }
+        (*topStack)->pointerNodeStackTree = root;
+    }
+    if(lexema != NULL)
+    inserirNoArvorePilha(&(*topStack)->pointerNodeStackTree, lexema, strTypeOperator);
+}
+
+///Inserção de um nó de uma árvore da NodeStack
+void inserirNoArvorePilha(NodeTreeStack **root,char identifier[],char strTypeOperator[]){
+    if (identifier != NULL && strTypeOperator != NULL){
+        if(*root == NULL) {
+            NodeTreeStack *newNodeTreeStack = (NodeTreeStack *) malloc (sizeof(NodeTreeStack));
+                if(strTypeOperator != NULL && identifier != NULL){		
+                    strcpy (newNodeTreeStack->strTypeOperator, strTypeOperator);
+                    strcpy (newNodeTreeStack->id, identifier);
+                }
+            newNodeTreeStack->nodeStackTreeRight = newNodeTreeStack->nodeStackTreeLeft = NULL;
+            *root = newNodeTreeStack;
+            //printf("Elemento %s do strTypeOperator %s foi inserido com sucesso! \n", identifier, strTypeOperator);
+            return;
+        }
+
+        if (identifier > (*root)->id){
+            inserirNoArvorePilha(&(*root)->nodeStackTreeRight,identifier, strTypeOperator);
+            return;
+        }
+        if (identifier < (*root)->id){
+            inserirNoArvorePilha(&(*root)->nodeStackTreeLeft, identifier, strTypeOperator);
+            return;
+        }
+
+        printf("Elemento %s ja existe na arvore. \n", identifier);
+    }
+}
+
+void printStack (NodeStack *topStack) {
+    NodeStack * auxNodeStack ;
+    if(topStack == NULL)
+        printf("NodeStack vazia!\n");
+    else{
+        auxNodeStack = topStack;
+        while(auxNodeStack!= NULL){
+            preorderStackSearch(auxNodeStack->pointerNodeStackTree);
+            auxNodeStack = auxNodeStack->next;	
+        }
+    }
+}
+
+void preorderStackSearch(NodeTreeStack *root) {
+    if(root == NULL){
+        //printf("\n");
+        return;
+    }
+    else{
+        if(strcmp(root->strTypeOperator,"integer") == 0 || strcmp(root->strTypeOperator,"character") == 0)	
+            printf("%s %s\n",root->id,root->strTypeOperator);	
+        else if((strlen(root->strTypeOperator) > 0))
+            printf("Error: Semantic error \n");             
+
+        preorderStackSearch(root->nodeStackTreeLeft);
+        preorderStackSearch(root->nodeStackTreeRight);				
+    }
+}
+
+void printTabs(int count){
+	for(int count_tabs = 0; count_tabs < (count-1); count_tabs++)
+		printf("\t");
+	
+    return;
+}
+
+void getTypeOperator2String(TypesOperators typeOperator, char* nameTypeOperator){
+    switch(typeOperator){
+        case integer:
+            strcpy(nameTypeOperator,"integer");
+            break;
+        case character:
+            strcpy(nameTypeOperator,"character");
+            break;
+    }
+}
+
+/*
+> . . . . . . . . . . . TREE
+*/
+
 NodeTree* makeNode(TypesOperators typeOperator, int line, NodeTree* nodeTree1, NodeTree* nodeTree2, char* lexema){
     
-    NodeTree* aux = (NodeTree*) malloc(sizeof(NodeTree));
-    if (aux){
-        aux->typeOperator=typeOperator;
-        aux->line=line;
-        aux->nodeTree1=nodeTree1;
-        aux->nodeTree2=nodeTree2;
-        aux->nodeTree3=NULL;
+    NodeTree* newNodeTree = (NodeTree*) malloc(sizeof(NodeTree));
+    if (newNodeTree){
+        newNodeTree->typeOperator=typeOperator;
+        newNodeTree->line=line;
+        newNodeTree->nodeTree1=nodeTree1;
+        newNodeTree->nodeTree2=nodeTree2;
+        newNodeTree->nodeTree3=NULL;
         if(lexema){
-            aux->lexema= (char*)malloc(strlen(lexema)+1);
-            strcpy(aux->lexema, lexema);
+            newNodeTree->lexema= (char*)malloc(strlen(lexema)+1);
+            strcpy(newNodeTree->lexema, lexema);
         }
-        return(aux);
+        return(newNodeTree);
     }
     return(NULL);
 }
 
 NodeTree* makeNodeTernary(TypesOperators typeOperator, int line, NodeTree* nodeTree1, NodeTree* nodeTree2, NodeTree* nodeTree3, char* lexema){
     
-    NodeTree* aux = (NodeTree*) malloc(sizeof(NodeTree));
-    if (aux){
-        aux->typeOperator = typeOperator;
-        aux->line = line;
-        aux->nodeTree1 = nodeTree1;
-        aux->nodeTree2 = nodeTree2;
-        aux->nodeTree3 = nodeTree3;
+    NodeTree* newNodeTree = (NodeTree*) malloc(sizeof(NodeTree));
+    if (newNodeTree){
+        newNodeTree->typeOperator = typeOperator;
+        newNodeTree->line = line;
+        newNodeTree->nodeTree1 = nodeTree1;
+        newNodeTree->nodeTree2 = nodeTree2;
+        newNodeTree->nodeTree3 = nodeTree3;
         if(lexema){
-            aux->lexema = (char*)malloc(strlen(lexema)+1);
-            strcpy(aux->lexema, lexema);
+            newNodeTree->lexema = (char*)malloc(strlen(lexema)+1);
+            strcpy(newNodeTree->lexema, lexema);
         }
-        return(aux);
+        return(newNodeTree);
     }
     return(NULL);
 }
 
-void printElements(NodeTree* nodeInTree, char* nameOperator){
-  switch(nodeInTree->typeOperator){
-    case program:
-      strcpy(nameOperator,"programa\n");
-      break;
-    case any:
-      sprintf(nameOperator, "Any - Line: %d\n", nodeInTree->line);
-      break;	
-    case block:
-      sprintf(nameOperator, "Block - Line: %d\n", nodeInTree->line);
-      break;
-    case single:
-      sprintf(nameOperator, "Single - Line: %d\n", nodeInTree->line);
-      break;
-    case unknown:
-      sprintf(nameOperator, "Unknown - Line: %d\n", nodeInTree->line);
-      break;
-    case integer:
-      sprintf(nameOperator, "Integer - Line: %d\n", nodeInTree->line);
-      break;
-    case returns:
-      sprintf(nameOperator, "Returns - Line: %d\n", nodeInTree->line);
-      break;
-    case if_while:
-      sprintf(nameOperator, "If-while - Line: %d\n", nodeInTree->line);
-      break;
-    case character:
-      sprintf(nameOperator, "Character - Line: %d\n", nodeInTree->line);
-      break;
-    case statements:
-      sprintf(nameOperator, "Statements - Line: %d\n", nodeInTree->line);
-      break;
-    case invocation:
-      sprintf(nameOperator, "Invocation - Line: %d\n", nodeInTree->line);
-      break;
-    case assignment:
-      sprintf(nameOperator, "Assignment - Line: %d\n", nodeInTree->line);
-      break;
-    case declarations:
-      sprintf(nameOperator, "Declarations - Line: %d\n", nodeInTree->line);
-      break;
-    case unknown_array:
-      sprintf(nameOperator, "Unlnown_Arry - Line: %d\n", nodeInTree->line);
-      break;
-    case integer_array:
-      sprintf(nameOperator, "Integer_Array - Line: %d\n", nodeInTree->line);
-      break;
-    case variable_list:
-      sprintf(nameOperator, "Variable_List - Line: %d\n", nodeInTree->line);
-      break;
-    case parameter_list:
-      sprintf(nameOperator, "Parameter_list - Line: %d\n", nodeInTree->line);
-      break;
-    case integer_method:
-      sprintf(nameOperator, "Integer_Method - Line: %d\n", nodeInTree->line);
-      break;
-    case character_array:
-      sprintf(nameOperator, "Character_array - Line: %d\n", nodeInTree->line);
-      break;
-    case character_method:
-      sprintf(nameOperator, "Character_Method - Line: %d\n", nodeInTree->line);
-      break;
-    case logical_operator:
-      sprintf(nameOperator, "Logical_Operator - Line: %d\n", nodeInTree->line);
-      break;
-    case arithmetic_operator:
-      sprintf(nameOperator, "Arithmetic_Operator - Line: %d\n", nodeInTree->line);
-      break;
-    case relational_operator:
-		sprintf(nameOperator, "Relational_Operator - Line: %d\n", nodeInTree->line);
-		break;
-	default:
-		sprintf(nameOperator, "DEFAULT - Line: %d\n", nodeInTree->line);
-      	break;
-  }
+void getNameOperatorAndLine(NodeTree* nodeInTree, char* nameOperator){
+    switch(nodeInTree->typeOperator){
+        case program:
+            strcpy(nameOperator,"programa\n");
+            break;
+        case typeDeclProg:
+            sprintf(nameOperator, "DeclProg - Line: %d\n", nodeInTree->line);
+            break;
+        case any:
+            sprintf(nameOperator, "Any - Line: %d\n", nodeInTree->line);
+            break;	
+        case block:
+            sprintf(nameOperator, "Block - Line: %d\n", nodeInTree->line);
+            break;
+        case single:
+            sprintf(nameOperator, "Single - Line: %d\n", nodeInTree->line);
+            break;
+        case unknown:
+            sprintf(nameOperator, "Unknown - Line: %d\n", nodeInTree->line);
+            break;
+        case integer:
+            sprintf(nameOperator, "Integer - Line: %d\n", nodeInTree->line);
+            break;
+        case returns:
+            sprintf(nameOperator, "Returns - Line: %d\n", nodeInTree->line);
+            break;
+        case if_while:
+            sprintf(nameOperator, "If-while - Line: %d\n", nodeInTree->line);
+            break;
+        case character:
+            sprintf(nameOperator, "Character - Line: %d\n", nodeInTree->line);
+            break;
+        case statements:
+            sprintf(nameOperator, "Statements - Line: %d\n", nodeInTree->line);
+            break;
+        case invocation:
+            sprintf(nameOperator, "Invocation - Line: %d\n", nodeInTree->line);
+            break;
+        case assignment:
+            sprintf(nameOperator, "Assignment - Line: %d\n", nodeInTree->line);
+            break;
+        case declarations:
+            sprintf(nameOperator, "Declarations - Line: %d\n", nodeInTree->line);
+            break;
+        case unknown_array:
+            sprintf(nameOperator, "Unlnown_Arry - Line: %d\n", nodeInTree->line);
+            break;
+        case integer_array:
+            sprintf(nameOperator, "Integer_Array - Line: %d\n", nodeInTree->line);
+            break;
+        case variable_list:
+            sprintf(nameOperator, "Variable_List - Line: %d\n", nodeInTree->line);
+            break;
+        case parameter_list:
+            sprintf(nameOperator, "Parameter_list - Line: %d\n", nodeInTree->line);
+            break;
+        case integer_method:
+            sprintf(nameOperator, "Integer_Method - Line: %d\n", nodeInTree->line);
+            break;
+        case character_array:
+            sprintf(nameOperator, "Character_array - Line: %d\n", nodeInTree->line);
+            break;
+        case character_method:
+            sprintf(nameOperator, "Character_Method - Line: %d\n", nodeInTree->line);
+            break;
+        case logical_operator:
+            sprintf(nameOperator, "Logical_Operator - Line: %d\n", nodeInTree->line);
+            break;
+        case arithmetic_operator:
+            sprintf(nameOperator, "Arithmetic_Operator - Line: %d\n", nodeInTree->line);
+            break;
+        case relational_operator:
+            sprintf(nameOperator, "Relational_Operator - Line: %d\n", nodeInTree->line);
+            break;
+        default:
+            sprintf(nameOperator, "DEFAULT - Line: %d\n", nodeInTree->line);
+            break;
+    }
 }

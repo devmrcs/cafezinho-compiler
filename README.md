@@ -8,5 +8,5 @@ Para compilação do código, certifique-se que tenha instalado o Flex/Lex, Biso
 Como executar
 - Abra o terminal no diretório ~/cafezinho-compiler e execute os seguintes comandos
   - `$make`
-  - `$./cafezinho < entrada`
+  - `$./cafezinho filename`
 

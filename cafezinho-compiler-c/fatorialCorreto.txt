@@ -1,5 +1,6 @@
 programa {
-	int inteiros, outrointerios;
+	int varivel1, variavel2, variavel3;
+	int variavel4;
 	escreva "O fatorial de ";
 
 	novalinha;

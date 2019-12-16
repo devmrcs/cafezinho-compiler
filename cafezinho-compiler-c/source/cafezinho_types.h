@@ -14,6 +14,7 @@ typedef enum{
     statements,
     invocation,
     assignment,
+    typeDeclProg,
     declarations,
     unknown_array,
     integer_array,
