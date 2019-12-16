@@ -1,22 +1,24 @@
-# .y files
-Y_SOURCE= ./source/cafezinho.y
- 
-# .l files
-L_SOURCE= ./source/cafezinho.l
-
-#Makefile Cafezinho
-
 all: objFolder cafezinho
 
-cafezinho: cafezinho.tab.c lex.yy.c
-	@ g++ -o cafezinho cafezinho.tab.c lex.yy.c -w
-	@ mv cafezinho.tab.c lex.yy.c cafezinho.tab.h objects
+cafezinho: cafezinho_parser.o cafezinho_lexer.o
+	@ cd source && gcc cafezinho_parser.o cafezinho_lexer.o -o cafezinho -w
+	@ cd source && mv *.c *.o cafezinho_parser.h ./objects
+	@ cd source && mv cafezinho ../
+	@ cd source && mv objects ../
 
-cafezinho.tab.c: $(Y_SOURCE)
-	@ bison -d $(Y_SOURCE)
+cafezinho_parser.o: cafezinho_parser.c
+	@ cd source && gcc -c cafezinho_parser.c -o cafezinho_parser.o
 
-lex.yy.c: $(L_SOURCE)
-	@ flex $(L_SOURCE)
+cafezinho_parser.c:  source/cafezinho_parser.y
+	@ cd source && bison -d -o cafezinho_parser.c cafezinho_parser.y
+	
+cafezinho_lexer.o: source/cafezinho_lexer.c
+	@ cd source && gcc -c cafezinho_lexer.c -o cafezinho_lexer.o
+
+cafezinho_lexer.c: source/cafezinho_lexer.l
+	@ cd source && flex -o cafezinho_lexer.c cafezinho_lexer.l
 
 objFolder:
-	@ mkdir -p objects
+	@ rm -rf objects
+	@ cd source && mkdir -p objects
+

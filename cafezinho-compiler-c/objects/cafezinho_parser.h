@@ -1,4 +1,4 @@
-/* A Bison parser, made by GNU Bison 3.3.2.  */
+/* A Bison parser, made by GNU Bison 3.4.1.  */
 
 /* Bison interface for Yacc-like parsers in C
 
@@ -34,8 +34,8 @@
 /* Undocumented macros, especially those whose name start with YY_,
    are private implementation details.  Do not rely on them.  */
 
-#ifndef YY_YY_CAFEZINHO_TAB_H_INCLUDED
-# define YY_YY_CAFEZINHO_TAB_H_INCLUDED
+#ifndef YY_YY_CAFEZINHO_PARSER_H_INCLUDED
+# define YY_YY_CAFEZINHO_PARSER_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -49,52 +49,63 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    VIRGULA = 258,
-    PONTOVIRGULA = 259,
-    INTERROGACAO = 260,
-    DOISPONTOS = 261,
-    EXCLAMACAO = 262,
-    ABRECHAVES = 263,
-    ABREPARENTESES = 264,
-    ABRECOLCHETES = 265,
-    FECHACHAVES = 266,
-    FECHAPARENTESES = 267,
-    FECHACOLCHETES = 268,
-    MENOR = 269,
-    MAIOR = 270,
-    MENORIGUAL = 271,
-    MAIORIGUAL = 272,
-    MENOS = 273,
+    ID = 258,
+    CONSCAR = 259,
+    CONSINT = 260,
+    CADEIACARACTERES = 261,
+    PROGRAMA = 262,
+    CAR = 263,
+    INT = 264,
+    RETORNE = 265,
+    LEIA = 266,
+    ESCREVA = 267,
+    NOVALINHA = 268,
+    SE = 269,
+    ENTAO = 270,
+    SENAO = 271,
+    ENQUANTO = 272,
+    EXECUTE = 273,
     MAIS = 274,
-    VEZES = 275,
-    DIVIDIR = 276,
-    RESTO = 277,
-    IGUAL = 278,
-    IGUALDUPLO = 279,
-    DIFERENTE = 280,
-    E = 281,
-    OU = 282,
-    ENQUANTO = 283,
-    SE = 284,
-    ENTAO = 285,
-    SENAO = 286,
-    RETORNE = 287,
-    ESCREVA = 288,
-    LEIA = 289,
-    EXECUTE = 290,
-    INT = 291,
-    CAR = 292,
-    INTCONST = 293,
-    ID = 294,
-    NOVALINHA = 295,
-    PROGRAMA = 296,
-    CARCONST = 297
+    MENOS = 275,
+    VEZES = 276,
+    DIVIDIDO = 277,
+    RESTO = 278,
+    IGUAL = 279,
+    IGUALIGUAL = 280,
+    MAIOR = 281,
+    MAIORIGUAL = 282,
+    MENOR = 283,
+    MENORIGUAL = 284,
+    E = 285,
+    OU = 286,
+    PAREN_E = 287,
+    PAREN_D = 288,
+    COLCH_E = 289,
+    COLCH_D = 290,
+    CHAVE_E = 291,
+    CHAVE_D = 292,
+    INTERROGACAO = 293,
+    EXCLAMACAO = 294,
+    DOISPONTOS = 295,
+    PONTOVIRGULA = 296,
+    VIRGULA = 297
   };
 #endif
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
+union YYSTYPE
+{
+#line 33 "cafezinho_parser.y"
+
+    int nlinha;
+    char* tokenLexema;
+    NodeTree* PointerTreeNode;
+
+#line 106 "cafezinho_parser.h"
+
+};
+typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif
@@ -104,4 +115,4 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_CAFEZINHO_TAB_H_INCLUDED  */
+#endif /* !YY_YY_CAFEZINHO_PARSER_H_INCLUDED  */

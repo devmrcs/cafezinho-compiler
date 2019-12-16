@@ -2073,7 +2073,7 @@ static void comment(void) {
     while ((c = yyinput()) != 0) {
         //cout << c;
 
-        if (c == '*') {
+          if (c == '*') {
             c = yyinput();
             if (c == '/'){
                 //cout << c;

@@ -1,4 +1,4 @@
-/* A Bison parser, made by GNU Bison 3.3.2.  */
+/* A Bison parser, made by GNU Bison 3.4.1.  */
 
 /* Bison implementation for Yacc-like parsers in C
 
@@ -48,7 +48,7 @@
 #define YYBISON 1
 
 /* Bison version.  */
-#define YYBISON_VERSION "3.3.2"
+#define YYBISON_VERSION "3.4.1"
 
 /* Skeleton name.  */
 #define YYSKELETON_NAME "yacc.c"
@@ -66,7 +66,7 @@
 
 
 /* First part of user prologue.  */
-#line 3 "cafezinho.y" /* yacc.c:337  */
+#line 3 "cafezinho.y"
 
 	#include <cmath>
 	#include <cstdio>
@@ -83,7 +83,8 @@
 
 	using namespace std;
 
-#line 87 "cafezinho_parser.cpp" /* yacc.c:337  */
+#line 87 "cafezinho_parser.cpp"
+
 # ifndef YY_NULLPTR
 #  if defined __cplusplus
 #   if 201103L <= __cplusplus
@@ -104,8 +105,8 @@
 # define YYERROR_VERBOSE 0
 #endif
 
-/* In a future release of Bison, this section will be replaced
-   by #include "cafezinho_parser.h".  */
+/* Use api.header.include to #include this header
+   instead of duplicating it here.  */
 #ifndef YY_YY_CAFEZINHO_PARSER_H_INCLUDED
 # define YY_YY_CAFEZINHO_PARSER_H_INCLUDED
 /* Debug traces.  */
@@ -166,7 +167,17 @@ extern int yydebug;
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
+union YYSTYPE
+{
+#line 20 "cafezinho.y"
+
+        char *token_string;
+        int *token_int;
+
+#line 178 "cafezinho_parser.cpp"
+
+};
+typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif
@@ -279,6 +290,8 @@ typedef short yytype_int16;
 # define YY_INITIAL_VALUE(Value) /* Nothing. */
 #endif
 
+
+#define YY_ASSERT(E) ((void) (0 && (E)))
 
 #if ! defined yyoverflow || YYERROR_VERBOSE
 
@@ -470,14 +483,14 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    32,    32,    36,    37,    38,    39,    43,    47,    48,
-      49,    53,    56,    57,    61,    62,    63,    64,    68,    69,
-      72,    73,    74,    78,    79,    83,    84,    88,    89,    90,
-      91,    92,    93,    94,    95,    96,    97,    98,   102,   106,
-     107,   111,   112,   116,   117,   121,   122,   126,   127,   128,
-     132,   133,   134,   135,   136,   140,   141,   142,   146,   147,
-     148,   149,   153,   154,   155,   159,   160,   164,   165,   166,
-     167,   168,   169,   170,   174,   175
+       0,    37,    37,    41,    42,    43,    44,    48,    52,    53,
+      54,    58,    61,    62,    66,    67,    68,    69,    73,    74,
+      77,    78,    79,    83,    84,    88,    89,    93,    94,    95,
+      96,    97,    98,    99,   100,   101,   102,   103,   107,   111,
+     112,   116,   117,   121,   122,   126,   127,   131,   132,   133,
+     137,   138,   139,   140,   141,   145,   146,   147,   151,   152,
+     153,   154,   158,   159,   160,   164,   165,   169,   170,   171,
+     172,   173,   174,   175,   179,   180
 };
 #endif
 
@@ -1203,6 +1216,8 @@ yynewstate:
 | yynewstate -- set current state (the top of the stack) to yystate.  |
 `--------------------------------------------------------------------*/
 yysetstate:
+  YYDPRINTF ((stderr, "Entering state %d\n", yystate));
+  YY_ASSERT (0 <= yystate && yystate < YYNSTATES);
   *yyssp = (yytype_int16) yystate;
 
   if (yyss + yystacksize - 1 <= yyssp)
@@ -1264,8 +1279,6 @@ yysetstate:
         YYABORT;
     }
 #endif /* !defined yyoverflow && !defined YYSTACK_RELOCATE */
-
-  YYDPRINTF ((stderr, "Entering state %d\n", yystate));
 
   if (yystate == YYFINAL)
     YYACCEPT;
@@ -1334,7 +1347,6 @@ yybackup:
   YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN
   *++yyvsp = yylval;
   YY_IGNORE_MAYBE_UNINITIALIZED_END
-
   goto yynewstate;
 
 
@@ -1369,8 +1381,9 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-      
-#line 1374 "cafezinho_parser.cpp" /* yacc.c:1652  */
+
+#line 1386 "cafezinho_parser.cpp"
+
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1601,5 +1614,5 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 178 "cafezinho.y" /* yacc.c:1918  */
+#line 183 "cafezinho.y"
 

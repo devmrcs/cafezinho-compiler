@@ -1,4 +1,4 @@
-/* A Bison parser, made by GNU Bison 3.3.2.  */
+/* A Bison parser, made by GNU Bison 3.4.1.  */
 
 /* Bison implementation for Yacc-like parsers in C
 
@@ -48,7 +48,7 @@
 #define YYBISON 1
 
 /* Bison version.  */
-#define YYBISON_VERSION "3.3.2"
+#define YYBISON_VERSION "3.4.1"
 
 /* Skeleton name.  */
 #define YYSKELETON_NAME "yacc.c"
@@ -66,14 +66,36 @@
 
 
 /* First part of user prologue.  */
-#line 1 "./source/cafezinho.y" /* yacc.c:337  */
+#line 1 "cafezinho_parser.y"
 
-//Autor: Marcos Antônio de Souza
-//Matricula: 201514357
+/* Secao prologo*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "cafezinho_types.h"
 
-#include <stdio.h>	
+extern char * yytext;
+extern int yylex();
+extern int numLinha;
+extern FILE* yyin;
+extern int errorLexical;
+extern int errorInput;
 
-#line 77 "cafezinho.tab.c" /* yacc.c:337  */
+void yyerror(char const *messageError);
+
+//Definicões das funções utilizadas na Árvore Abstrata
+NodeTree* makeNode(TypesOperators typeOperator,  int line, NodeTree* nodeTree1, NodeTree* nodeTree2, char* lexema);
+NodeTree* makeNodeTernary(TypesOperators typeOperator,  int line, NodeTree* nodeTree1, NodeTree* nodeTree2, NodeTree* nodeTree3, char* lexema);
+void percorreArvore(NodeTree* nodeInTree, int count);
+void printElements(NodeTree* nodeInTree, char* nameOperator);
+void printTabs(int count);
+
+
+NodeTree* rootTree;
+char nameOperator[200];
+
+#line 98 "cafezinho_parser.c"
+
 # ifndef YY_NULLPTR
 #  if defined __cplusplus
 #   if 201103L <= __cplusplus
@@ -94,10 +116,10 @@
 # define YYERROR_VERBOSE 0
 #endif
 
-/* In a future release of Bison, this section will be replaced
-   by #include "cafezinho.tab.h".  */
-#ifndef YY_YY_CAFEZINHO_TAB_H_INCLUDED
-# define YY_YY_CAFEZINHO_TAB_H_INCLUDED
+/* Use api.header.include to #include this header
+   instead of duplicating it here.  */
+#ifndef YY_YY_CAFEZINHO_PARSER_H_INCLUDED
+# define YY_YY_CAFEZINHO_PARSER_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -111,52 +133,63 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    VIRGULA = 258,
-    PONTOVIRGULA = 259,
-    INTERROGACAO = 260,
-    DOISPONTOS = 261,
-    EXCLAMACAO = 262,
-    ABRECHAVES = 263,
-    ABREPARENTESES = 264,
-    ABRECOLCHETES = 265,
-    FECHACHAVES = 266,
-    FECHAPARENTESES = 267,
-    FECHACOLCHETES = 268,
-    MENOR = 269,
-    MAIOR = 270,
-    MENORIGUAL = 271,
-    MAIORIGUAL = 272,
-    MENOS = 273,
+    ID = 258,
+    CONSCAR = 259,
+    CONSINT = 260,
+    CADEIACARACTERES = 261,
+    PROGRAMA = 262,
+    CAR = 263,
+    INT = 264,
+    RETORNE = 265,
+    LEIA = 266,
+    ESCREVA = 267,
+    NOVALINHA = 268,
+    SE = 269,
+    ENTAO = 270,
+    SENAO = 271,
+    ENQUANTO = 272,
+    EXECUTE = 273,
     MAIS = 274,
-    VEZES = 275,
-    DIVIDIR = 276,
-    RESTO = 277,
-    IGUAL = 278,
-    IGUALDUPLO = 279,
-    DIFERENTE = 280,
-    E = 281,
-    OU = 282,
-    ENQUANTO = 283,
-    SE = 284,
-    ENTAO = 285,
-    SENAO = 286,
-    RETORNE = 287,
-    ESCREVA = 288,
-    LEIA = 289,
-    EXECUTE = 290,
-    INT = 291,
-    CAR = 292,
-    INTCONST = 293,
-    ID = 294,
-    NOVALINHA = 295,
-    PROGRAMA = 296,
-    CARCONST = 297
+    MENOS = 275,
+    VEZES = 276,
+    DIVIDIDO = 277,
+    RESTO = 278,
+    IGUAL = 279,
+    IGUALIGUAL = 280,
+    MAIOR = 281,
+    MAIORIGUAL = 282,
+    MENOR = 283,
+    MENORIGUAL = 284,
+    E = 285,
+    OU = 286,
+    PAREN_E = 287,
+    PAREN_D = 288,
+    COLCH_E = 289,
+    COLCH_D = 290,
+    CHAVE_E = 291,
+    CHAVE_D = 292,
+    INTERROGACAO = 293,
+    EXCLAMACAO = 294,
+    DOISPONTOS = 295,
+    PONTOVIRGULA = 296,
+    VIRGULA = 297
   };
 #endif
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
+union YYSTYPE
+{
+#line 33 "cafezinho_parser.y"
+
+    int nlinha;
+    char* tokenLexema;
+    NodeTree* PointerTreeNode;
+
+#line 190 "cafezinho_parser.c"
+
+};
+typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif
@@ -166,7 +199,7 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_CAFEZINHO_TAB_H_INCLUDED  */
+#endif /* !YY_YY_CAFEZINHO_PARSER_H_INCLUDED  */
 
 
 
@@ -269,6 +302,8 @@ typedef short yytype_int16;
 # define YY_INITIAL_VALUE(Value) /* Nothing. */
 #endif
 
+
+#define YY_ASSERT(E) ((void) (0 && (E)))
 
 #if ! defined yyoverflow || YYERROR_VERBOSE
 
@@ -401,7 +436,7 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  6
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   192
+#define YYLAST   189
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  43
@@ -410,7 +445,7 @@ union yyalloc
 /* YYNRULES -- Number of rules.  */
 #define YYNRULES  75
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  162
+#define YYNSTATES  163
 
 #define YYUNDEFTOK  2
 #define YYMAXUTOK   297
@@ -460,14 +495,14 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    20,    20,    24,    25,    26,    27,    31,    35,    36,
-      37,    41,    44,    45,    49,    50,    51,    52,    56,    57,
-      60,    61,    62,    66,    67,    71,    72,    76,    77,    78,
-      79,    80,    81,    82,    83,    84,    85,    86,    90,    94,
-      95,    99,   100,   104,   105,   109,   110,   114,   115,   116,
-     120,   121,   122,   123,   124,   128,   129,   130,   134,   135,
-     136,   137,   141,   142,   143,   147,   148,   152,   153,   154,
-     155,   156,   157,   158,   162,   163
+       0,    59,    59,    63,    67,    72,    77,    81,    85,    89,
+      93,    97,   101,   102,   106,   110,   114,   118,   125,   126,
+     130,   131,   135,   142,   143,   147,   148,   152,   153,   154,
+     155,   156,   157,   158,   159,   160,   161,   162,   166,   170,
+     171,   175,   176,   180,   181,   185,   186,   190,   191,   192,
+     196,   197,   198,   199,   200,   204,   205,   206,   210,   211,
+     212,   213,   217,   218,   219,   223,   224,   228,   229,   230,
+     231,   232,   233,   234,   238,   239
 };
 #endif
 
@@ -476,18 +511,18 @@ static const yytype_uint8 yyrline[] =
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "$end", "error", "$undefined", "VIRGULA", "PONTOVIRGULA",
-  "INTERROGACAO", "DOISPONTOS", "EXCLAMACAO", "ABRECHAVES",
-  "ABREPARENTESES", "ABRECOLCHETES", "FECHACHAVES", "FECHAPARENTESES",
-  "FECHACOLCHETES", "MENOR", "MAIOR", "MENORIGUAL", "MAIORIGUAL", "MENOS",
-  "MAIS", "VEZES", "DIVIDIR", "RESTO", "IGUAL", "IGUALDUPLO", "DIFERENTE",
-  "E", "OU", "ENQUANTO", "SE", "ENTAO", "SENAO", "RETORNE", "ESCREVA",
-  "LEIA", "EXECUTE", "INT", "CAR", "INTCONST", "ID", "NOVALINHA",
-  "PROGRAMA", "CARCONST", "$accept", "programa", "declfuncvar", "declprog",
-  "declvar", "declfunc", "listaparametros", "listaparametrosCont", "bloco",
-  "listadeclvar", "tipo", "listacomando", "comando", "expr", "assingexpr",
-  "condexpr", "orexpr", "andexpr", "eqexpr", "desigexpr", "addexpr",
-  "mulexpr", "unexpr", "lvalueexpr", "primexpr", "listexpr", YY_NULLPTR
+  "$end", "error", "$undefined", "ID", "CONSCAR", "CONSINT",
+  "CADEIACARACTERES", "PROGRAMA", "CAR", "INT", "RETORNE", "LEIA",
+  "ESCREVA", "NOVALINHA", "SE", "ENTAO", "SENAO", "ENQUANTO", "EXECUTE",
+  "MAIS", "MENOS", "VEZES", "DIVIDIDO", "RESTO", "IGUAL", "IGUALIGUAL",
+  "MAIOR", "MAIORIGUAL", "MENOR", "MENORIGUAL", "E", "OU", "PAREN_E",
+  "PAREN_D", "COLCH_E", "COLCH_D", "CHAVE_E", "CHAVE_D", "INTERROGACAO",
+  "EXCLAMACAO", "DOISPONTOS", "PONTOVIRGULA", "VIRGULA", "$accept",
+  "Programa", "DeclFuncVar", "DeclProg", "DeclVar", "DeclFunc",
+  "ListaParametros", "ListaParametrosCont", "Bloco", "ListaDeclVar",
+  "Tipo", "ListaComando", "Comando", "Expr", "AssignExpr", "CondExpr",
+  "OrExpr", "AndExpr", "EqExpr", "DesigExpr", "AddExpr", "MulExpr",
+  "UnExpr", "LValueExpr", "PrimExpr", "ListExpr", YY_NULLPTR
 };
 #endif
 
@@ -504,10 +539,10 @@ static const yytype_uint16 yytoknum[] =
 };
 # endif
 
-#define YYPACT_NINF -132
+#define YYPACT_NINF -120
 
 #define yypact_value_is_default(Yystate) \
-  (!!((Yystate) == (-132)))
+  (!!((Yystate) == (-120)))
 
 #define YYTABLE_NINF -67
 
@@ -518,23 +553,23 @@ static const yytype_uint16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int16 yypact[] =
 {
-      53,  -132,  -132,    24,    11,     5,  -132,    41,  -132,    83,
-      53,  -132,    15,    53,    26,    64,    53,    27,    23,     6,
-      62,  -132,    33,    66,    53,  -132,  -132,    42,    76,  -132,
-      42,    82,   110,    76,   103,    98,  -132,     4,   119,  -132,
-    -132,   138,    69,   146,  -132,  -132,    16,   125,    71,   113,
-      81,    84,  -132,   129,  -132,    19,   115,  -132,    41,    60,
-     151,  -132,   107,  -132,   145,  -132,    76,    76,   154,   156,
-     157,   152,   159,     8,    76,  -132,  -132,  -132,  -132,    76,
-     117,   117,   117,   117,   117,   117,   117,   117,   117,   117,
-     117,   117,   117,    76,   126,   161,   153,  -132,    53,   155,
-     163,    76,  -132,   158,   160,  -132,  -132,  -132,    76,  -132,
-    -132,  -132,    20,   162,   165,   125,    71,   113,   113,    81,
-      81,    81,    81,    84,    84,  -132,  -132,  -132,  -132,   164,
-      53,   151,  -132,   166,    53,   167,   139,   143,   168,    76,
-    -132,   169,   117,   151,  -132,  -132,    53,  -132,  -132,    69,
-      69,  -132,  -132,  -132,   172,  -132,  -132,   147,    53,    69,
-    -132,  -132
+      84,  -120,  -120,     9,    12,    22,  -120,    -7,  -120,    82,
+      84,  -120,    84,    27,    38,    48,    84,    10,    50,    62,
+    -120,   101,    91,    37,    84,  -120,    -6,  -120,  -120,    98,
+     114,    58,    78,    93,    97,    79,    98,  -120,    79,  -120,
+    -120,   111,    55,   106,  -120,  -120,    19,   125,    -8,   112,
+      90,   110,  -120,   132,  -120,    43,    -7,    71,   115,   153,
+    -120,  -120,    95,    98,   118,   126,   120,   121,   122,  -120,
+      98,    98,    42,  -120,   131,  -120,  -120,  -120,  -120,   103,
+      98,   103,   103,   141,   103,   103,   103,   103,   103,   103,
+     103,   103,   103,    98,   161,   127,  -120,   134,    84,   129,
+     136,  -120,  -120,     6,   137,  -120,    98,  -120,  -120,  -120,
+     140,   142,    98,  -120,   125,   138,    -8,   112,   103,    90,
+      90,    90,    90,   110,   110,  -120,  -120,  -120,  -120,   139,
+      84,   135,  -120,    84,   115,  -120,    98,   143,   144,   165,
+     158,   146,   103,   112,   115,  -120,    84,  -120,  -120,  -120,
+    -120,    55,    55,  -120,  -120,   145,  -120,   166,  -120,    84,
+      55,  -120,  -120
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -542,39 +577,39 @@ static const yytype_int16 yypact[] =
      means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       6,    23,    24,     0,     0,     0,     1,     0,     2,    10,
-      20,     7,     0,    12,     0,     0,     6,     0,     0,    10,
-       0,    13,     0,     0,     6,     5,    27,     0,     0,    19,
-       0,     0,     0,     0,     0,     0,    71,    70,     0,    72,
+       6,    24,    23,     0,     0,     0,     1,     0,     2,    10,
+      20,     7,    12,     0,     0,     0,     6,     0,     0,     0,
+      13,     0,     0,    10,     6,     5,    70,    71,    72,     0,
+       0,     0,     0,     0,     0,     0,     0,    19,     0,    27,
       37,     0,    25,     0,    38,    39,    41,    44,    46,    49,
-      54,    57,    61,     0,    64,    10,     0,     8,     0,    14,
-      10,     3,    70,    63,     0,    62,     0,     0,     0,    72,
-       0,    66,     0,     0,     0,    33,    18,    26,    28,     0,
+      54,    57,    61,     0,    64,    10,     0,    14,    10,     0,
+       8,     3,     0,     0,     0,    66,     0,     0,     0,    33,
+       0,     0,    70,    62,     0,    63,    18,    26,    28,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,    11,     0,     0,
-       0,     0,    73,     0,     0,    29,    32,    31,     0,    30,
-      68,    74,     0,     0,     0,    43,    45,    47,    48,    50,
-      51,    52,    53,    56,    55,    58,    59,    60,    40,     0,
-      20,    10,    16,    15,     6,     0,     0,     0,     0,     0,
-      67,    69,     0,    10,    21,     9,     0,     4,    69,     0,
-       0,    65,    75,    42,     0,    17,    36,    34,    20,     0,
-      22,    35
+       0,     0,     0,     0,     0,     0,    11,     0,     0,     0,
+       0,    68,    74,     0,     0,    29,     0,    30,    32,    31,
+       0,     0,     0,    73,    43,     0,    45,    47,     0,    51,
+      52,    50,    53,    55,    56,    58,    59,    60,    40,     0,
+      20,    15,    16,     6,    10,    67,     0,    69,     0,     0,
+       0,     0,     0,    48,    10,    21,     0,     4,     9,    75,
+      65,     0,     0,    69,    42,     0,    17,    34,    36,    20,
+       0,    22,    35
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int16 yypgoto[] =
 {
-    -132,  -132,   -12,  -132,   -18,  -132,  -132,   -88,    -1,  -119,
-     -10,   137,  -131,   -26,   -68,    40,  -132,   104,   102,    61,
-      47,    58,    48,   150,     3,  -132
+    -120,  -120,   -12,  -120,   -22,  -120,  -120,   -90,    -1,  -119,
+     -10,   147,  -117,   -26,   -55,    41,  -120,   105,   104,   -66,
+      59,    65,    60,   157,    35,  -120
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     3,     4,     8,    15,    16,    20,    21,    40,    17,
+      -1,     3,     4,     8,    15,    16,    19,    20,    40,    17,
        5,    41,    42,    43,    44,    45,    46,    47,    48,    49,
-      50,    51,    52,    53,    54,   112
+      50,    51,    52,    53,    54,   103
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -582,73 +617,71 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int16 yytable[] =
 {
-      18,    57,    64,    22,    25,   111,    11,    68,    70,    12,
-     132,   144,    61,    73,    74,    27,    56,    28,   156,   157,
-     110,    79,    12,   139,     6,   128,    30,   -66,   161,    94,
-      63,    26,   140,    65,    27,    10,    28,    95,    29,   160,
-     103,   104,   100,    80,     9,    30,    36,    37,   113,    10,
-      39,    28,     7,   114,    19,    31,    32,    97,   155,    33,
-      34,    35,    55,    98,    23,    36,    37,    38,    24,    39,
-      99,   152,    59,    26,    58,   135,    27,    10,    28,    60,
-      36,    62,   138,    27,    39,    28,    12,    30,    22,     1,
-       2,    66,    13,    14,    30,    82,    83,    31,    32,    88,
-      89,    33,    34,    35,    90,    91,    92,    36,    37,    38,
-      27,    39,    28,   145,    36,    37,    73,   101,    39,    67,
-      18,    30,   147,    75,    27,   154,    28,    84,    85,    86,
-      87,   119,   120,   121,   122,    30,    22,    71,   125,   126,
-     127,    36,    37,   117,   118,    69,   123,   124,    18,    76,
-      78,    81,    93,    96,    12,    36,    62,   102,   105,    39,
-     106,   107,   108,   109,   129,   130,   131,   134,   133,   146,
-     136,   142,   137,   150,   149,   141,   158,   143,   159,    77,
-     148,   151,   153,   116,   115,    72,     0,     0,     0,     0,
-       0,     0,   -65
+      18,    60,    21,    64,    25,    68,    11,   102,   132,     6,
+      74,   145,    61,    26,    27,    28,   117,    82,   -66,     7,
+      29,    30,    31,    32,    33,     9,    62,    34,    63,    10,
+      35,    83,    22,    95,   157,   158,    99,   104,   128,   135,
+     161,    23,    36,   162,   110,   111,    10,    37,   136,    38,
+      79,    39,   143,    55,   115,    96,   156,    80,    26,    27,
+      28,    26,    27,    28,    67,    29,    30,    31,    32,    33,
+      73,    59,    34,    75,    62,    35,   112,    94,    35,    14,
+     138,   149,    72,    27,    28,    14,   141,    36,    21,    24,
+      36,    10,     1,     2,    38,    56,    39,    38,    26,    27,
+      28,    26,    27,    28,    57,    97,    72,    27,    28,    88,
+      89,    36,   148,    98,    12,    35,    13,    65,    35,    69,
+      18,   147,   155,    35,    14,    70,    58,    36,   101,    71,
+      36,    90,    91,    92,    38,    36,    21,    38,    84,    85,
+      86,    87,    38,   119,   120,   121,   122,    78,    76,    18,
+     125,   126,   127,   123,   124,    81,    93,    14,   100,   105,
+     106,   107,   108,   109,   113,   118,   129,   -65,   130,   131,
+     133,   134,   137,   139,   144,   140,   152,   146,   142,   150,
+     151,   153,   160,   154,   114,   116,   159,    66,     0,    77
 };
 
 static const yytype_int16 yycheck[] =
 {
-      10,    19,    28,    13,    16,    73,     7,    33,    34,     3,
-      98,   130,    24,     9,    10,     7,    10,     9,   149,   150,
-      12,     5,     3,     3,     0,    93,    18,    23,   159,    10,
-      27,     4,    12,    30,     7,     8,     9,    55,    11,   158,
-      66,    67,    60,    27,    39,    18,    38,    39,    74,     8,
-      42,     9,    41,    79,    39,    28,    29,    58,   146,    32,
-      33,    34,    39,     3,    38,    38,    39,    40,     4,    42,
-      10,   139,    39,     4,    12,   101,     7,     8,     9,    13,
-      38,    39,   108,     7,    42,     9,     3,    18,    98,    36,
-      37,     9,     9,    10,    18,    24,    25,    28,    29,    18,
-      19,    32,    33,    34,    20,    21,    22,    38,    39,    40,
-       7,    42,     9,   131,    38,    39,     9,    10,    42,     9,
-     130,    18,   134,     4,     7,   143,     9,    14,    15,    16,
-      17,    84,    85,    86,    87,    18,   146,    39,    90,    91,
-      92,    38,    39,    82,    83,    42,    88,    89,   158,    11,
-       4,    26,    23,    38,     3,    38,    39,    12,     4,    42,
-       4,     4,    10,     4,    38,     4,    13,     4,    13,     3,
-      12,     6,    12,    30,    35,    13,     4,    13,    31,    42,
-      13,    13,   142,    81,    80,    35,    -1,    -1,    -1,    -1,
-      -1,    -1,    23
+      10,    23,    12,    29,    16,    31,     7,    62,    98,     0,
+      36,   130,    24,     3,     4,     5,    82,    25,    24,     7,
+      10,    11,    12,    13,    14,     3,    32,    17,    34,    36,
+      20,    39,     5,    55,   151,   152,    58,    63,    93,    33,
+     159,     3,    32,   160,    70,    71,    36,    37,    42,    39,
+      31,    41,   118,     3,    80,    56,   146,    38,     3,     4,
+       5,     3,     4,     5,     6,    10,    11,    12,    13,    14,
+      35,    34,    17,    38,    32,    20,    34,    34,    20,    42,
+     106,   136,     3,     4,     5,    42,   112,    32,    98,    41,
+      32,    36,     8,     9,    39,    33,    41,    39,     3,     4,
+       5,     3,     4,     5,     3,    34,     3,     4,     5,    19,
+      20,    32,   134,    42,    32,    20,    34,     3,    20,    41,
+     130,   133,   144,    20,    42,    32,    35,    32,    33,    32,
+      32,    21,    22,    23,    39,    32,   146,    39,    26,    27,
+      28,    29,    39,    84,    85,    86,    87,    41,    37,   159,
+      90,    91,    92,    88,    89,    30,    24,    42,     5,    41,
+      34,    41,    41,    41,    33,    24,     5,    24,    41,    35,
+      41,    35,    35,    33,    35,    33,    18,    42,    40,    35,
+      15,    35,    16,   142,    79,    81,    41,    30,    -1,    42
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
      symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,    36,    37,    44,    45,    53,     0,    41,    46,    39,
-       8,    51,     3,     9,    10,    47,    48,    52,    53,    39,
-      49,    50,    53,    38,     4,    45,     4,     7,     9,    11,
-      18,    28,    29,    32,    33,    34,    38,    39,    40,    42,
+       0,     8,     9,    44,    45,    53,     0,     7,    46,     3,
+      36,    51,    32,    34,    42,    47,    48,    52,    53,    49,
+      50,    53,     5,     3,    41,    45,     3,     4,     5,    10,
+      11,    12,    13,    14,    17,    20,    32,    37,    39,    41,
       51,    54,    55,    56,    57,    58,    59,    60,    61,    62,
-      63,    64,    65,    66,    67,    39,    10,    47,    12,    39,
-      13,    45,    39,    67,    56,    67,     9,     9,    56,    42,
-      56,    39,    66,     9,    10,     4,    11,    54,     4,     5,
-      27,    26,    24,    25,    14,    15,    16,    17,    18,    19,
-      20,    21,    22,    23,    10,    47,    38,    51,     3,    10,
-      47,    10,    12,    56,    56,     4,     4,     4,    10,     4,
-      12,    57,    68,    56,    56,    60,    61,    62,    62,    63,
-      63,    63,    63,    64,    64,    65,    65,    65,    57,    38,
-       4,    13,    50,    13,     4,    56,    12,    12,    56,     3,
-      12,    13,     6,    13,    52,    47,     3,    45,    13,    35,
-      30,    13,    57,    58,    47,    50,    55,    55,     4,    31,
-      52,    55
+      63,    64,    65,    66,    67,     3,    33,     3,    35,    34,
+      47,    45,    32,    34,    56,     3,    66,     6,    56,    41,
+      32,    32,     3,    67,    56,    67,    37,    54,    41,    31,
+      38,    30,    25,    39,    26,    27,    28,    29,    19,    20,
+      21,    22,    23,    24,    34,    47,    51,    34,    42,    47,
+       5,    33,    57,    68,    56,    41,    34,    41,    41,    41,
+      56,    56,    34,    33,    60,    56,    61,    62,    24,    63,
+      63,    63,    63,    64,    64,    65,    65,    65,    57,     5,
+      41,    35,    50,    41,    35,    33,    42,    35,    56,    33,
+      33,    56,    40,    62,    35,    52,    42,    45,    47,    57,
+      35,    15,    18,    35,    58,    47,    50,    55,    55,    41,
+      16,    52,    55
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
@@ -671,7 +704,7 @@ static const yytype_uint8 yyr2[] =
        0,     4,     0,     1,     2,     4,     4,     6,     4,     3,
        0,     5,     8,     1,     1,     1,     2,     1,     2,     3,
        3,     3,     3,     2,     6,     8,     6,     1,     1,     1,
-       3,     1,     5,     3,     1,     3,     1,     3,     3,     1,
+       3,     1,     5,     3,     1,     3,     1,     3,     4,     1,
        3,     3,     3,     3,     1,     3,     3,     1,     3,     3,
        3,     1,     2,     2,     1,     4,     1,     4,     3,     4,
        1,     1,     1,     3,     1,     3
@@ -1193,6 +1226,8 @@ yynewstate:
 | yynewstate -- set current state (the top of the stack) to yystate.  |
 `--------------------------------------------------------------------*/
 yysetstate:
+  YYDPRINTF ((stderr, "Entering state %d\n", yystate));
+  YY_ASSERT (0 <= yystate && yystate < YYNSTATES);
   *yyssp = (yytype_int16) yystate;
 
   if (yyss + yystacksize - 1 <= yyssp)
@@ -1254,8 +1289,6 @@ yysetstate:
         YYABORT;
     }
 #endif /* !defined yyoverflow && !defined YYSTACK_RELOCATE */
-
-  YYDPRINTF ((stderr, "Entering state %d\n", yystate));
 
   if (yystate == YYFINAL)
     YYACCEPT;
@@ -1324,7 +1357,6 @@ yybackup:
   YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN
   *++yyvsp = yylval;
   YY_IGNORE_MAYBE_UNINITIALIZED_END
-
   goto yynewstate;
 
 
@@ -1359,8 +1391,488 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-      
-#line 1364 "cafezinho.tab.c" /* yacc.c:1652  */
+  case 2:
+#line 59 "cafezinho_parser.y"
+    { 	rootTree = makeNode(program, numLinha, (yyvsp[-1].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL); }
+#line 1398 "cafezinho_parser.c"
+    break;
+
+  case 3:
+#line 63 "cafezinho_parser.y"
+    {
+																			NodeTree* aux = makeNode((yyvsp[-4].PointerTreeNode)->typeOperator, (yyvsp[-4].PointerTreeNode)->line, NULL, NULL, (yyvsp[-3].tokenLexema));
+                                                                        	(yyval.PointerTreeNode) = makeNodeTernary(declarations, numLinha, aux , (yyvsp[-2].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL);
+																		}
+#line 1407 "cafezinho_parser.c"
+    break;
+
+  case 4:
+#line 67 "cafezinho_parser.y"
+    {
+	  																		TypesOperators tmp = (yyvsp[-7].PointerTreeNode)->typeOperator == integer ? integer_array : character_array;
+	  																		NodeTree* aux = makeNode(tmp, (yyvsp[-7].PointerTreeNode)->line, NULL, NULL, (yyvsp[-6].tokenLexema));
+                                                                        	(yyval.PointerTreeNode) = makeNodeTernary(declarations, numLinha, aux, (yyvsp[-2].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL);
+                                                                      	}
+#line 1417 "cafezinho_parser.c"
+    break;
+
+  case 5:
+#line 72 "cafezinho_parser.y"
+    {
+	  																		(yyvsp[-1].PointerTreeNode)->typeOperator = ((yyvsp[-3].PointerTreeNode)->typeOperator == integer ? integer_method : character_method);
+																			(yyvsp[-1].PointerTreeNode)->lexema = (yyvsp[-2].tokenLexema);
+	  																		(yyval.PointerTreeNode) = makeNode(declarations, numLinha, (yyvsp[-1].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL);
+																		}
+#line 1427 "cafezinho_parser.c"
+    break;
+
+  case 6:
+#line 77 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = makeNode(declarations, numLinha, NULL, NULL, NULL); }
+#line 1433 "cafezinho_parser.c"
+    break;
+
+  case 7:
+#line 81 "cafezinho_parser.y"
+    { (yyval.PointerTreeNode) = (yyvsp[0].PointerTreeNode); }
+#line 1439 "cafezinho_parser.c"
+    break;
+
+  case 8:
+#line 85 "cafezinho_parser.y"
+    {
+																			NodeTree* aux = makeNode(unknown, numLinha, NULL, NULL, (yyvsp[-1].tokenLexema));
+																			(yyval.PointerTreeNode) = makeNode(variable_list, numLinha, aux, (yyvsp[0].PointerTreeNode), NULL);
+																		}
+#line 1448 "cafezinho_parser.c"
+    break;
+
+  case 9:
+#line 89 "cafezinho_parser.y"
+    {
+	  																		NodeTree* aux = makeNode(unknown, numLinha, NULL, NULL, (yyvsp[-4].tokenLexema));
+																			(yyval.PointerTreeNode) = makeNode(variable_list, numLinha, aux, (yyvsp[0].PointerTreeNode), NULL);
+																		}
+#line 1457 "cafezinho_parser.c"
+    break;
+
+  case 10:
+#line 93 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = makeNode(variable_list, numLinha, NULL, NULL, NULL); }
+#line 1463 "cafezinho_parser.c"
+    break;
+
+  case 11:
+#line 97 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = makeNode(unknown, numLinha, (yyvsp[-2].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL); }
+#line 1469 "cafezinho_parser.c"
+    break;
+
+  case 12:
+#line 101 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = makeNode(parameter_list, numLinha, NULL, NULL, NULL); }
+#line 1475 "cafezinho_parser.c"
+    break;
+
+  case 13:
+#line 102 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = (yyvsp[0].PointerTreeNode); }
+#line 1481 "cafezinho_parser.c"
+    break;
+
+  case 14:
+#line 106 "cafezinho_parser.y"
+    {
+												 							NodeTree* aux = makeNode((yyvsp[-1].PointerTreeNode)->typeOperator, (yyvsp[-1].PointerTreeNode)->line, NULL, NULL, (yyvsp[0].tokenLexema));
+																			(yyval.PointerTreeNode) = makeNode(parameter_list, numLinha, aux, NULL, NULL);; 
+																		}
+#line 1490 "cafezinho_parser.c"
+    break;
+
+  case 15:
+#line 110 "cafezinho_parser.y"
+    {
+												 							NodeTree* aux = makeNode((yyvsp[-3].PointerTreeNode)->typeOperator == integer ? integer_array: character_array, (yyvsp[-3].PointerTreeNode)->line, NULL, NULL, (yyvsp[-2].tokenLexema));
+																			(yyval.PointerTreeNode) = makeNode(parameter_list, numLinha, aux, NULL, NULL);; 
+																		}
+#line 1499 "cafezinho_parser.c"
+    break;
+
+  case 16:
+#line 114 "cafezinho_parser.y"
+    {
+												 							NodeTree* aux = makeNode((yyvsp[-3].PointerTreeNode)->typeOperator, (yyvsp[-3].PointerTreeNode)->line, NULL, NULL, (yyvsp[-2].tokenLexema));
+																			(yyval.PointerTreeNode) = makeNode(parameter_list, numLinha, aux, (yyvsp[0].PointerTreeNode), NULL);; 
+																		}
+#line 1508 "cafezinho_parser.c"
+    break;
+
+  case 17:
+#line 118 "cafezinho_parser.y"
+    {
+												 							NodeTree* aux = makeNode((yyvsp[-5].PointerTreeNode)->typeOperator == integer ? integer_array: character_array, (yyvsp[-5].PointerTreeNode)->line, NULL, NULL, (yyvsp[-4].tokenLexema));
+																			(yyval.PointerTreeNode) = makeNode(parameter_list, numLinha, aux, (yyvsp[0].PointerTreeNode), NULL);; 
+																		}
+#line 1517 "cafezinho_parser.c"
+    break;
+
+  case 18:
+#line 125 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = makeNode(block, numLinha, (yyvsp[-2].PointerTreeNode), (yyvsp[-1].PointerTreeNode), NULL); }
+#line 1523 "cafezinho_parser.c"
+    break;
+
+  case 19:
+#line 126 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = makeNode(block, numLinha, (yyvsp[-1].PointerTreeNode), NULL, NULL); }
+#line 1529 "cafezinho_parser.c"
+    break;
+
+  case 20:
+#line 130 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = makeNode(variable_list, numLinha, NULL, NULL, NULL); }
+#line 1535 "cafezinho_parser.c"
+    break;
+
+  case 21:
+#line 131 "cafezinho_parser.y"
+    {
+												 							NodeTree* aux = makeNode((yyvsp[-4].PointerTreeNode)->typeOperator, (yyvsp[-4].PointerTreeNode)->line, NULL, NULL, (yyvsp[-3].tokenLexema));
+																			(yyval.PointerTreeNode) = makeNodeTernary(variable_list, numLinha, aux, (yyvsp[-2].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL);; 
+																		}
+#line 1544 "cafezinho_parser.c"
+    break;
+
+  case 22:
+#line 135 "cafezinho_parser.y"
+    {
+												 							NodeTree* aux = makeNode((yyvsp[-7].PointerTreeNode)->typeOperator, (yyvsp[-7].PointerTreeNode)->line, NULL, NULL, (yyvsp[-6].tokenLexema));
+																			(yyval.PointerTreeNode) = makeNodeTernary(variable_list, numLinha, aux, (yyvsp[-2].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL);; 
+																		}
+#line 1553 "cafezinho_parser.c"
+    break;
+
+  case 23:
+#line 142 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = makeNode(integer, numLinha, NULL, NULL, NULL); }
+#line 1559 "cafezinho_parser.c"
+    break;
+
+  case 24:
+#line 143 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = makeNode(character, numLinha, NULL, NULL, NULL); }
+#line 1565 "cafezinho_parser.c"
+    break;
+
+  case 25:
+#line 147 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = makeNode(statements, numLinha, (yyvsp[0].PointerTreeNode), NULL, NULL); }
+#line 1571 "cafezinho_parser.c"
+    break;
+
+  case 26:
+#line 148 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = makeNode(statements, numLinha, (yyvsp[-1].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL); }
+#line 1577 "cafezinho_parser.c"
+    break;
+
+  case 27:
+#line 152 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = makeNode(statements, numLinha, NULL, NULL, NULL); }
+#line 1583 "cafezinho_parser.c"
+    break;
+
+  case 28:
+#line 153 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = (yyvsp[-1].PointerTreeNode); }
+#line 1589 "cafezinho_parser.c"
+    break;
+
+  case 29:
+#line 154 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = makeNode(returns, numLinha, (yyvsp[-1].PointerTreeNode), NULL, NULL); }
+#line 1595 "cafezinho_parser.c"
+    break;
+
+  case 30:
+#line 155 "cafezinho_parser.y"
+    {	(yyval.PointerTreeNode) = (yyvsp[-1].PointerTreeNode); }
+#line 1601 "cafezinho_parser.c"
+    break;
+
+  case 31:
+#line 156 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = (yyvsp[-1].PointerTreeNode); }
+#line 1607 "cafezinho_parser.c"
+    break;
+
+  case 32:
+#line 157 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = makeNode(statements, numLinha, NULL, NULL, NULL); }
+#line 1613 "cafezinho_parser.c"
+    break;
+
+  case 33:
+#line 158 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = makeNode(statements, numLinha, NULL, NULL, NULL); }
+#line 1619 "cafezinho_parser.c"
+    break;
+
+  case 34:
+#line 159 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = makeNode(if_while, numLinha, (yyvsp[-3].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL); }
+#line 1625 "cafezinho_parser.c"
+    break;
+
+  case 35:
+#line 160 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = makeNodeTernary(if_while, numLinha, (yyvsp[-5].PointerTreeNode), (yyvsp[-2].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL); }
+#line 1631 "cafezinho_parser.c"
+    break;
+
+  case 36:
+#line 161 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = makeNode(if_while, numLinha, (yyvsp[-3].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL); }
+#line 1637 "cafezinho_parser.c"
+    break;
+
+  case 37:
+#line 162 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = (yyvsp[0].PointerTreeNode); }
+#line 1643 "cafezinho_parser.c"
+    break;
+
+  case 38:
+#line 166 "cafezinho_parser.y"
+    {	(yyval.PointerTreeNode) = (yyvsp[0].PointerTreeNode); }
+#line 1649 "cafezinho_parser.c"
+    break;
+
+  case 39:
+#line 170 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = (yyvsp[0].PointerTreeNode); }
+#line 1655 "cafezinho_parser.c"
+    break;
+
+  case 40:
+#line 171 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = makeNode(assignment, numLinha, (yyvsp[-2].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL); }
+#line 1661 "cafezinho_parser.c"
+    break;
+
+  case 41:
+#line 175 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = (yyvsp[0].PointerTreeNode); }
+#line 1667 "cafezinho_parser.c"
+    break;
+
+  case 42:
+#line 176 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = makeNodeTernary(if_while, numLinha, (yyvsp[-4].PointerTreeNode), (yyvsp[-2].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL); }
+#line 1673 "cafezinho_parser.c"
+    break;
+
+  case 43:
+#line 180 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = makeNode(logical_operator, numLinha, (yyvsp[-2].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL); }
+#line 1679 "cafezinho_parser.c"
+    break;
+
+  case 44:
+#line 181 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = (yyvsp[0].PointerTreeNode); }
+#line 1685 "cafezinho_parser.c"
+    break;
+
+  case 45:
+#line 185 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = makeNode(logical_operator, numLinha, (yyvsp[-2].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL); }
+#line 1691 "cafezinho_parser.c"
+    break;
+
+  case 46:
+#line 186 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = (yyvsp[0].PointerTreeNode); }
+#line 1697 "cafezinho_parser.c"
+    break;
+
+  case 47:
+#line 190 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = makeNode(relational_operator, numLinha, (yyvsp[-2].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL); }
+#line 1703 "cafezinho_parser.c"
+    break;
+
+  case 48:
+#line 191 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = makeNode(relational_operator, numLinha, (yyvsp[-3].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL); }
+#line 1709 "cafezinho_parser.c"
+    break;
+
+  case 49:
+#line 192 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = (yyvsp[0].PointerTreeNode); }
+#line 1715 "cafezinho_parser.c"
+    break;
+
+  case 50:
+#line 196 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = makeNode(relational_operator, numLinha, (yyvsp[-2].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL); }
+#line 1721 "cafezinho_parser.c"
+    break;
+
+  case 51:
+#line 197 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = makeNode(relational_operator, numLinha, (yyvsp[-2].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL); }
+#line 1727 "cafezinho_parser.c"
+    break;
+
+  case 52:
+#line 198 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = makeNode(relational_operator, numLinha, (yyvsp[-2].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL); }
+#line 1733 "cafezinho_parser.c"
+    break;
+
+  case 53:
+#line 199 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = makeNode(relational_operator, numLinha, (yyvsp[-2].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL); }
+#line 1739 "cafezinho_parser.c"
+    break;
+
+  case 54:
+#line 200 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = (yyvsp[0].PointerTreeNode); }
+#line 1745 "cafezinho_parser.c"
+    break;
+
+  case 55:
+#line 204 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = makeNode(arithmetic_operator, numLinha, (yyvsp[-2].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL); }
+#line 1751 "cafezinho_parser.c"
+    break;
+
+  case 56:
+#line 205 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = makeNode(arithmetic_operator, numLinha, (yyvsp[-2].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL); }
+#line 1757 "cafezinho_parser.c"
+    break;
+
+  case 57:
+#line 206 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = (yyvsp[0].PointerTreeNode); }
+#line 1763 "cafezinho_parser.c"
+    break;
+
+  case 58:
+#line 210 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = makeNode(arithmetic_operator, numLinha, (yyvsp[-2].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL); }
+#line 1769 "cafezinho_parser.c"
+    break;
+
+  case 59:
+#line 211 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = makeNode(arithmetic_operator, numLinha, (yyvsp[-2].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL); }
+#line 1775 "cafezinho_parser.c"
+    break;
+
+  case 60:
+#line 212 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = makeNode(arithmetic_operator, numLinha, (yyvsp[-2].PointerTreeNode), (yyvsp[0].PointerTreeNode), NULL); }
+#line 1781 "cafezinho_parser.c"
+    break;
+
+  case 61:
+#line 213 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = (yyvsp[0].PointerTreeNode); }
+#line 1787 "cafezinho_parser.c"
+    break;
+
+  case 62:
+#line 217 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = makeNode(arithmetic_operator, numLinha, (yyvsp[0].PointerTreeNode), NULL, NULL); }
+#line 1793 "cafezinho_parser.c"
+    break;
+
+  case 63:
+#line 218 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = makeNode(logical_operator, numLinha, (yyvsp[0].PointerTreeNode), NULL, NULL); }
+#line 1799 "cafezinho_parser.c"
+    break;
+
+  case 64:
+#line 219 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = (yyvsp[0].PointerTreeNode); }
+#line 1805 "cafezinho_parser.c"
+    break;
+
+  case 65:
+#line 223 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = makeNode(single, numLinha, NULL, NULL, (yyvsp[-3].tokenLexema)); }
+#line 1811 "cafezinho_parser.c"
+    break;
+
+  case 66:
+#line 224 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = makeNode(any, numLinha, NULL, NULL, (yyvsp[0].tokenLexema)); }
+#line 1817 "cafezinho_parser.c"
+    break;
+
+  case 67:
+#line 228 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = makeNode(invocation, numLinha, (yyvsp[-1].PointerTreeNode), NULL, (yyvsp[-3].tokenLexema)); }
+#line 1823 "cafezinho_parser.c"
+    break;
+
+  case 68:
+#line 229 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = makeNode(invocation, numLinha, NULL, NULL, (yyvsp[-2].tokenLexema)); }
+#line 1829 "cafezinho_parser.c"
+    break;
+
+  case 69:
+#line 230 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = makeNode(single, numLinha, NULL, NULL, (yyvsp[-3].tokenLexema)); }
+#line 1835 "cafezinho_parser.c"
+    break;
+
+  case 70:
+#line 231 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = makeNode(any, numLinha, NULL, NULL, NULL); }
+#line 1841 "cafezinho_parser.c"
+    break;
+
+  case 71:
+#line 232 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = makeNode(character, numLinha, NULL, NULL, NULL); }
+#line 1847 "cafezinho_parser.c"
+    break;
+
+  case 72:
+#line 233 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = makeNode(integer, numLinha, NULL, NULL, NULL); }
+#line 1853 "cafezinho_parser.c"
+    break;
+
+  case 73:
+#line 234 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = (yyvsp[-1].PointerTreeNode); }
+#line 1859 "cafezinho_parser.c"
+    break;
+
+  case 74:
+#line 238 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = makeNode(parameter_list, numLinha, (yyvsp[0].PointerTreeNode), NULL, NULL); }
+#line 1865 "cafezinho_parser.c"
+    break;
+
+  case 75:
+#line 239 "cafezinho_parser.y"
+    { 	(yyval.PointerTreeNode) = makeNode(parameter_list, numLinha, (yyvsp[0].PointerTreeNode), NULL, NULL); }
+#line 1871 "cafezinho_parser.c"
+    break;
+
+
+#line 1875 "cafezinho_parser.c"
+
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1591,32 +2103,199 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 166 "./source/cafezinho.y" /* yacc.c:1918  */
+#line 241 "cafezinho_parser.y"
+ /* Secao Epilogo*/   
 
-main(){
-	printf("+-------------------+\n");
-	printf("|       START       |\n");
-	printf("+-------------------+\n");
-	yyparse();
-	printf("+-------------------+\n");
-	printf("|        END        |\n");
-	printf("+-------------------+\n");
-	//printf("| Total de linhas: %d\n", yyget_lineno());
+int main(int argc, char** argv){
+  printf("> Start - Compiler Coffee\n\n");
 
-	return 0;
+  if(argc != 2){
+    errorInput = 1;
+    yyerror("Error: Input Mode: ./cafezinho namefile");
+  }
+     
+  yyin=fopen(argv[1], "r");
+  if(!yyin)
+      yyerror("Error: File cannot be opened\n");
+  yyparse();
+
+  percorreArvore(rootTree, 0);
+  printf("\n> End - Compiler Coffee\n");
 }
 
-yyerror(s)
-char *s;
-{	
-	printf("+-------------------+\n");
-	printf("|       ERROR\n");
-	printf("| Line: %d\n", yyget_lineno());
-	printf("| %s\n", s);
-	printf("+-------------------+\n");
+void yyerror(char const *messageError) {
+    if(errorLexical) {
+        printf("%s in line %d - token: %s\n", messageError, numLinha, yytext);
+    }
+    else if(errorInput){
+      printf("%s\n", messageError);
+    }
+    else{
+      printf("Syntatic error in %s ", yytext);
+      printf(" - line: %d \n", numLinha);
+      errorLexical = 1;
+    }
+
+    printf("\n> End - Compiler Coffee\n");
+    exit(1);
 }
 
-yywrap()
-{
-	return(1);
+void printTabs(int count){
+	for(int count_tabs = 0; count_tabs < (count-1); count_tabs++)
+		printf("\t");
+	
+	return;
+}
+
+void percorreArvore(NodeTree* nodeInTree, int count){
+    if(nodeInTree){
+		count++;
+
+        printElements(nodeInTree, nameOperator);
+		printTabs(count);
+        printf("[%d] %s", count, nameOperator);
+
+        if(nodeInTree->nodeTree1 != NULL) {
+			printTabs(count);
+			printf("> NodeTree 1 | [%d] {\n", count);
+
+			percorreArvore(nodeInTree->nodeTree1, count);
+
+			printTabs(count);
+			printf("}end NodeTree 1 | [%d]\n\n", count);
+        }
+
+        if(nodeInTree->nodeTree2 != NULL) {
+			printTabs(count);
+			printf("> NodeTree 2 | [%d] {\n", count);
+
+			percorreArvore(nodeInTree->nodeTree2, count);
+
+			printTabs(count);
+			printf("}end NodeTree 2 | [%d]\n\n", count);
+        }
+        if(nodeInTree->nodeTree3 != NULL) {
+			printTabs(count);
+			printf("> NodeTree 3 | [%d] {\n", count);
+
+			percorreArvore(nodeInTree->nodeTree3, count);
+
+			printTabs(count);
+			printf("}end NodeTree 3 | %d\n\n", count);
+        }
+		
+    }
+}
+
+NodeTree* makeNode(TypesOperators typeOperator, int line, NodeTree* nodeTree1, NodeTree* nodeTree2, char* lexema){
+    
+    NodeTree* aux = (NodeTree*) malloc(sizeof(NodeTree));
+    if (aux){
+        aux->typeOperator=typeOperator;
+        aux->line=line;
+        aux->nodeTree1=nodeTree1;
+        aux->nodeTree2=nodeTree2;
+        aux->nodeTree3=NULL;
+        if(lexema){
+            aux->lexema= (char*)malloc(strlen(lexema)+1);
+            strcpy(aux->lexema, lexema);
+        }
+        return(aux);
+    }
+    return(NULL);
+}
+
+NodeTree* makeNodeTernary(TypesOperators typeOperator, int line, NodeTree* nodeTree1, NodeTree* nodeTree2, NodeTree* nodeTree3, char* lexema){
+    
+    NodeTree* aux = (NodeTree*) malloc(sizeof(NodeTree));
+    if (aux){
+        aux->typeOperator = typeOperator;
+        aux->line = line;
+        aux->nodeTree1 = nodeTree1;
+        aux->nodeTree2 = nodeTree2;
+        aux->nodeTree3 = nodeTree3;
+        if(lexema){
+            aux->lexema = (char*)malloc(strlen(lexema)+1);
+            strcpy(aux->lexema, lexema);
+        }
+        return(aux);
+    }
+    return(NULL);
+}
+
+void printElements(NodeTree* nodeInTree, char* nameOperator){
+  switch(nodeInTree->typeOperator){
+    case program:
+      strcpy(nameOperator,"programa\n");
+      break;
+    case any:
+      sprintf(nameOperator, "Any - Line: %d\n", nodeInTree->line);
+      break;	
+    case block:
+      sprintf(nameOperator, "Block - Line: %d\n", nodeInTree->line);
+      break;
+    case single:
+      sprintf(nameOperator, "Single - Line: %d\n", nodeInTree->line);
+      break;
+    case unknown:
+      sprintf(nameOperator, "Unknown - Line: %d\n", nodeInTree->line);
+      break;
+    case integer:
+      sprintf(nameOperator, "Integer - Line: %d\n", nodeInTree->line);
+      break;
+    case returns:
+      sprintf(nameOperator, "Returns - Line: %d\n", nodeInTree->line);
+      break;
+    case if_while:
+      sprintf(nameOperator, "If-while - Line: %d\n", nodeInTree->line);
+      break;
+    case character:
+      sprintf(nameOperator, "Character - Line: %d\n", nodeInTree->line);
+      break;
+    case statements:
+      sprintf(nameOperator, "Statements - Line: %d\n", nodeInTree->line);
+      break;
+    case invocation:
+      sprintf(nameOperator, "Invocation - Line: %d\n", nodeInTree->line);
+      break;
+    case assignment:
+      sprintf(nameOperator, "Assignment - Line: %d\n", nodeInTree->line);
+      break;
+    case declarations:
+      sprintf(nameOperator, "Declarations - Line: %d\n", nodeInTree->line);
+      break;
+    case unknown_array:
+      sprintf(nameOperator, "Unlnown_Arry - Line: %d\n", nodeInTree->line);
+      break;
+    case integer_array:
+      sprintf(nameOperator, "Integer_Array - Line: %d\n", nodeInTree->line);
+      break;
+    case variable_list:
+      sprintf(nameOperator, "Variable_List - Line: %d\n", nodeInTree->line);
+      break;
+    case parameter_list:
+      sprintf(nameOperator, "Parameter_list - Line: %d\n", nodeInTree->line);
+      break;
+    case integer_method:
+      sprintf(nameOperator, "Integer_Method - Line: %d\n", nodeInTree->line);
+      break;
+    case character_array:
+      sprintf(nameOperator, "Character_array - Line: %d\n", nodeInTree->line);
+      break;
+    case character_method:
+      sprintf(nameOperator, "Character_Method - Line: %d\n", nodeInTree->line);
+      break;
+    case logical_operator:
+      sprintf(nameOperator, "Logical_Operator - Line: %d\n", nodeInTree->line);
+      break;
+    case arithmetic_operator:
+      sprintf(nameOperator, "Arithmetic_Operator - Line: %d\n", nodeInTree->line);
+      break;
+    case relational_operator:
+		sprintf(nameOperator, "Relational_Operator - Line: %d\n", nodeInTree->line);
+		break;
+	default:
+		sprintf(nameOperator, "DEFAULT - Line: %d\n", nodeInTree->line);
+      	break;
+  }
 }

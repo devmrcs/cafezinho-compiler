@@ -17,6 +17,11 @@
 	using namespace std;
 %}
 
+%union {
+        char *token_string;
+        int *token_int;
+}
+
 %start programa
 
 %token VIRGULA PONTOVIRGULA INTERROGACAO DOISPONTOS EXCLAMACAO
@@ -33,7 +38,7 @@ programa :
 ;
 
 declfuncvar :
-	tipo ID declvar PONTOVIRGULA declfuncvar
+	  tipo ID declvar PONTOVIRGULA declfuncvar
 	| tipo ID ABRECOLCHETES INTCONST FECHACOLCHETES declvar PONTOVIRGULA declfuncvar
 	| tipo ID declfunc declfuncvar
 	|
@@ -44,7 +49,7 @@ declprog :
 ;
 
 declvar :
-	VIRGULA ID declvar
+	  VIRGULA ID declvar
 	| VIRGULA ID ABRECOLCHETES INTCONST FECHACOLCHETES declvar
 	|
 ;

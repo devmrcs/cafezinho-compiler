@@ -1,0 +1,6 @@
+programa {
+	int inteiros, outrointerios;
+	escreva "O fatorial de ";
+
+	novalinha;
+}
